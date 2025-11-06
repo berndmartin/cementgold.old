@@ -1,0 +1,43 @@
+Hier ist eine typisch-praktische .gitignore für JavaScript-Projekte – funktioniert für Node.js, React, Vue, Next.js, Vite usw. Kopiere sie einfach in deinen Projekt-Root.
+gitignore# Node.js / npm
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build-Ordner
+dist/
+build/
+.out/
+.vercel/
+.netlify/
+
+# Logs & Temp
+*.log
+*.log.*
+temp/
+tmp/
+.cache/
+.parcel-cache/
+
+# Environment-Variablen
+.env
+.env.local
+.env.*.local
+.env.production
+.env.development
+
+# Editoren & IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Testing
+coverage/
