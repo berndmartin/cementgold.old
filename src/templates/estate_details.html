@@ -1,0 +1,828 @@
+<div class="scrollable">
+    <div class="scrollable-content">
+        <div class="section" id="top">
+            <estate-calc>
+            <div class="panel-group" ui-state='myAccordion' ui-default='{{efc.accordion}}' id="printable" >
+                <!-- ################ Objekt              ##################################################### -->
+                <div class="panel panel-default" >
+
+                    <div class="panel-heading"  ng-click="edc.estate.panels[0] = !edc.estate.panels[0]">
+                        <h5 class="panel-title" >
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    <a class="text-right btn-edit" ng-click="edc.editAccordion(edc.estate.id,0)" href=""><i class="fa fa-pencil"></i></a>
+                                    {{ edc.estate.title | limitTo: 12 }}{{ edc.estate.title.length > 12 ? '..' : ''}}
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.estate.qm | number : 2 }}&nbsp;{{ edc.setup.qm }} 
+                                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[0], 'fa-plus-circle': !edc.estate.panels[0]}"></i> 
+                                </div>
+                            </div>
+                        </h5>
+
+                    </div>
+                    <div ng-if="edc.estate.panels[0]">
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'title' | transSrv }} 
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    {{ edc.estate.title | limitTo: 20 }}{{ edc.estate.title.length > 20 ? '..' : ''}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'flaeche' | transSrv }}
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    {{ edc.estate.qm }}&nbsp;{{ edc.setup.qm }}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'grundstuecksanteil' | transSrv }}
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    &#037; {{ edc.estate.grundstuecksanteil }} 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'wohnungsanteil' | transSrv }}
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    &#037; {{ 100 - edc.estate.grundstuecksanteil }} 
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'baujahr' | transSrv }}
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    {{ edc.estate.baujahr | limitTo: 12 }}{{ edc.estate.baujahr.length > 12 ? '..' : ''}}
+                                </div>
+                            </div>
+                            <hr class="divider" />
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'plz' | transSrv }}
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    {{ edc.estate.plz | limitTo: 12 }}{{ edc.estate.plz.length > 12 ? '..' : ''}}
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'address' | transSrv }}
+                                    <a  ui-turn-on="map"><i class="fa fa-map-marker fa-fw"></i></a> 
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    {{ edc.estate.address | limitTo: 12 }}{{ edc.estate.address.length > 12 ? '..' : ''}}
+                                </div>
+                            </div>
+                            <hr class="divider" />
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'anbieter' | transSrv }}
+                                </div>
+                                <div class="col-xs-7 text-right">
+                                    {{ edc.estate.url | limitTo: 12  }}{{ edc.estate.url.length > 12 ? '..' : ''}}
+                                    <a  ui-turn-on="www"><i class="fa fa-globe fa-fw"></i></a>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    {{ 'remark' | transSrv }}
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    {{ edc.estate.remark | limitTo: 150 }}{{ edc.estate.remark.length > 150 ? '..' : ''}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>    
+                </div>    
+                <!-- ################ Investitionskosten ##################################################### -->
+                <div class="panel panel-default" >
+                    <div class="panel-heading" ui-set="{'myAccordion': 2}" ng-click="edc.estate.panels[1] = !edc.estate.panels[1]">
+                        <h5 class="panel-title" >
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a class="text-right" ng-click="edc.editAccordion(edc.estate.id,1)" href=""><i class="fa fa-pencil"></i></a>
+                                    {{ 'investitionskosten' | transSrv }}
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.totalprice | number : 0 }}
+                                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[1], 'fa-plus-circle': !edc.estate.panels[1]}"></i> 
+                                </div>
+                            </div>
+                        </h5>
+                    </div>
+                    <div ng-if="edc.estate.panels[1]">
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-xs-12 text-right">
+                                    {{ edc.setup.currency }}/{{ edc.setup.qm }}&nbsp;{{  edc.estate.kaufpreis / edc.estate.qm | number : 0 }} 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    {{ 'kaufpreis' | transSrv }}
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.kaufpreis | number : 0 }} 
+                                </div>
+                            </div>
+                            <hr class="divider" />
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{'makler' | transSrv }}
+                                </div>
+                                <div class="col-xs-2 text-right">
+                                    &#037;&nbsp;{{ edc.estate.makler | number : 2 }} 
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.maklergeb | number : 0 }} 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{'grerwst' | transSrv }}
+                                </div>
+                                <div class="col-xs-2 text-right">
+                                    &#037;&nbsp;{{ edc.estate.grerwst | number : 2 }} 
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.grerwstgeb | number : 0 }} 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{'notar' | transSrv }}
+                                </div>
+                                <div class="col-xs-2 text-right">
+                                    &#037;&nbsp;{{ edc.estate.notar | number : 2 }} 
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.notargeb | number : 0 }} 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    {{'grundbuch' | transSrv }}
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.grundbuch | number : 0 }} 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    {{'sonstigekosten' | transSrv }}
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.sonstigekosten | number : 0 }} 
+                                </div>
+                            </div>
+                            <hr class="divider" />
+
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    {{'kaufnebenkosten' | transSrv }}&nbsp;&sum;
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.notargeb + edc.estate.grerwstgeb +  edc.estate.maklergeb + edc.estate.grundbuch + edc.estate.sonstigekosten | number : 0 }}  
+                                </div>
+                            </div>
+                            <hr class="divider" />
+                            <div class="row">
+                                <div class="col-xs-7">
+                                    {{ 'investitionskosten' | transSrv }}
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.kaufpreis + edc.estate.notargeb + edc.estate.grerwstgeb +  edc.estate.maklergeb + edc.estate.grundbuch + edc.estate.sonstigekosten | number : 0 }}  
+                                </div>  
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- ################ Finanzierung ##################################################### -->
+                <div class="panel panel-default" >
+                    <div class="panel-heading" ui-set="{'myAccordion': 3}" ng-click="edc.estate.panels[2] = !edc.estate.panels[2]">
+                        <h5 class="panel-title" >
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <a class="text-right" ng-click="edc.editAccordion(edc.estate.id,2)" href=""><i class="fa fa-pencil"></i></a>
+                                    {{ 'finanzierung' | transSrv }}
+                                </div>
+                                <div class="col-xs-6 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.fremdkap | number : 0 }} 
+                                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[2], 'fa-plus-circle': !edc.estate.panels[2]}"></i> 
+                                </div>
+                            </div>
+                        </h5>
+                    </div>
+                    <div ng-if="edc.estate.panels[2]">
+                        <div class="panel-body">
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'eigenkapital' | transSrv }}
+                                </div>
+                                <div class="col-xs-2 text-right">
+                                    &#037;&nbsp;{{ edc.estate.eigenkapper | number : 2 }} 
+                                </div>
+                                <div class="col-xs-5 text-right">
+                                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.eigenkap | number : 0 }} 
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-5">
+                                    {{ 'fremdkapital' | transSrv }}
+                                </div>
+                                <div class="col-xs-2 text-right">
+                                 &#037;&nbsp;{{ edc.estate.fremdkapper | number : 2 }} 
+                             </div>
+                             <div class="col-xs-5 text-right">
+                                 {{ edc.setup.currency }}&nbsp;{{ edc.estate.fremdkap | number : 0 }} 
+                             </div>
+                         </div>
+
+                         <div class="row">
+                            <div class="col-xs-5">
+                                {{ 'hhaufwendung' | transSrv }}
+                            </div>
+                            <div class="col-xs-7 text-right">
+                             {{ edc.setup.currency }}&nbsp;{{ edc.estate.kaufpreis + edc.estate.notargeb + edc.estate.grerwstgeb +  edc.estate.maklergeb + edc.estate.grundbuch + edc.estate.sonstigekosten - edc.estate.fremdkap - edc.estate.eigenkap | number : 0 }} 
+                         </div>
+                         <hr class="divider">
+                     </div>
+
+                     <div class="row">
+                        <div class="col-xs-5">
+                            {{ 'investitionskosten' | transSrv }}
+                        </div>
+                        <div class="col-xs-7 text-right">
+                         {{ edc.setup.currency }}&nbsp;{{ edc.estate.kaufpreis + edc.estate.notargeb + edc.estate.grerwstgeb +  edc.estate.maklergeb + edc.estate.grundbuch + edc.estate.sonstigekosten  | number : 0 }} 
+                     </div>
+                     <hr class="divider">
+                 </div>
+
+
+
+                 <hr class="divider" />
+
+                 <div class="row">
+                    <div class="col-xs-5">
+                        {{'zins' | transSrv }}
+                    </div>
+                    <div class="col-xs-2 text-right">
+                     &#037;&nbsp;{{ edc.estate.zins| number : 2 }} 
+                 </div>
+                 <div class="col-xs-5 text-right">
+                     {{ edc.setup.currency }}&nbsp;{{ edc.estate.zins / 100 * edc.estate.fremdkap / 12 | number : 2 }} 
+                 </div>
+             </div>
+
+
+             <div class="row">
+                <div class="col-xs-5">
+                    {{'tilgung' | transSrv }}
+                </div>
+                <div class="col-xs-2 text-right">
+                 &#037;&nbsp;{{ edc.estate.tilgung | number : 2 }} 
+             </div>
+             <div class="col-xs-5 text-right">
+                 {{ edc.setup.currency }}&nbsp;{{ edc.estate.tilgung / 100 * edc.estate.fremdkap / 12 | number : 2 }} 
+                 <hr class="divider">
+             </div>
+             
+         </div>
+
+         <div class="row">
+            <div class="col-xs-5">
+             {{'hhersterate' | transSrv }}&nbsp;&sum;&nbsp;{{ 'hhmonatlich' | transSrv }}
+         </div>
+         <div class="col-xs-7 text-right">
+             {{ edc.setup.currency }}&nbsp;{{ (edc.estate.zins / 100 * edc.estate.fremdkap / 12) + (edc.estate.tilgung / 100 * edc.estate.fremdkap / 12 ) | number : 2 }} 
+         </div>
+     </div>
+     <div class="row">
+        <div class="col-xs-5">
+         {{'hhersterate' | transSrv }}&nbsp;&sum;&nbsp;{{ 'hhperannum' | transSrv }}&nbsp;({{ 'annuitaet' | transSrv }})
+     </div>
+     <div class="col-xs-7 text-right">
+         {{ edc.setup.currency }}&nbsp;{{ (edc.estate.zins / 100 * edc.estate.fremdkap ) + (edc.estate.tilgung / 100 * edc.estate.fremdkap ) | number : 2 }} 
+     </div>
+ </div>
+
+ <hr class="divider" />
+
+ <div class="row">
+    <div class="col-xs-5">
+        {{'laufzeit' | transSrv }}
+    </div>
+    <div class="col-xs-7 text-right">
+     {{ edc.estate.years | number : 0 }}&nbsp;{{'jahre' | transSrv }}
+ </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-5">
+        {{'restschuld' | transSrv }}
+    </div>
+    <div class="col-xs-7 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ edc.estate.restschuld | number : 0 }} 
+    </div>
+</div>
+<hr class="divider" />
+
+<div class="row">
+    <div class="col-xs-5">
+     {{'startdatum' | transSrv }}&nbsp;<small>(dd/MM/yyyy)</small>
+ </div>
+ <div class="col-xs-7 text-right">
+    {{edc.estate.startdate | date: "dd/MM/yyyy"}}
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ################ Miete ##################################################### -->
+<div class="panel panel-default" >
+    <div class="panel-heading" ui-set="{'myAccordion': 4}" ng-click="edc.estate.panels[3] = !edc.estate.panels[3]">
+        <h5 class="panel-title" >
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <a class="text-right" ng-click="edc.editAccordion(edc.estate.id,3)" href=""><i class="fa fa-pencil"></i></a>
+                    {{ 'miete' | transSrv }}&nbsp;{{ 'hhperannum' | transSrv }} 
+                </div>
+                <div class="col-xs-6 text-right">
+                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.grundmietesum | number : 0 }} 
+                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[3], 'fa-plus-circle': !edc.estate.panels[3]}"></i> 
+                </div>
+            </div>
+        </h5>
+    </div>
+    <div ng-if="edc.estate.panels[3]">
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-xs-5">
+                    &nbsp;
+                </div>
+                <div class="col-xs-3 text-right">
+                    {{ 'hhmonatlich' | transSrv }} 
+                </div>
+                <div class="col-xs-4 text-right">
+                    {{ 'hhperannum' | transSrv }} 
+                </div>
+            </div>      
+            <hr class="divider">
+            <div class="row">
+                <div class="col-xs-5">
+                    {{'miete' | transSrv }}
+                </div>
+                <div class="col-xs-3 text-right">
+                 {{ edc.setup.currency }}&nbsp;{{ edc.estate.grundmietesum / 12 | number : 0 }} 
+             </div>
+             <div class="col-xs-4 text-right">
+                 {{ edc.setup.currency }}&nbsp;{{ edc.estate.grundmietesum | number : 0 }} 
+             </div>
+         </div>
+
+         <div class="row">
+            <div class="col-xs-5">
+                &nbsp;
+            </div>
+            <div class="col-xs-3 text-right">
+                {{ edc.setup.currency }}/{{ edc.setup.qm }}&nbsp;{{ edc.estate.grundmietesum / edc.estate.qm / 12 | number : 2 }}
+                <hr class="divider">
+            </div>
+            <div class="col-xs-4 text-right">
+                &nbsp;
+                <hr class="divider">
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xs-5">
+                {{'hausverwaltung' | transSrv }}
+            </div>
+            <div class="col-xs-3 text-right">
+             {{ edc.setup.currency }}&nbsp;{{ edc.estate.hausverwaltungsum / 12 | number : 0 }} 
+         </div>
+         <div class="col-xs-4 text-right">
+             {{ edc.setup.currency }}&nbsp;{{ edc.estate.hausverwaltungsum | number : 0 }} 
+         </div>
+     </div>
+
+     <div class="row">
+        <div class="col-xs-5">
+            {{'ruecklagen' | transSrv }}
+        </div>
+        <div class="col-xs-3 text-right">
+         {{ edc.setup.currency }}&nbsp;{{ edc.estate.instandhaltungsruecklagensum / 12 | number : 0 }} 
+     </div>
+     <div class="col-xs-4 text-right">
+         {{ edc.setup.currency }}&nbsp;{{ edc.estate.instandhaltungsruecklagensum | number : 0 }} 
+     </div>
+ </div>
+ <hr class="divider" />
+ <div class="row">
+    <div class="col-xs-5">
+        {{'nonumlagefaehignebenkosten' | transSrv }}&nbsp;&sum;
+    </div>
+    <div class="col-xs-3 text-right">
+        -&nbsp;{{ edc.setup.currency }}&nbsp;{{ (edc.estate.hausverwaltungsum + edc.estate.instandhaltungsruecklagensum ) / 12 | number : 0 }} 
+        <hr class="divider">
+    </div>
+    <div class="col-xs-4 text-right">
+        -&nbsp;{{ edc.setup.currency }}&nbsp;{{ (edc.estate.hausverwaltungsum + edc.estate.instandhaltungsruecklagensum  )  | number : 0 }} 
+        <hr class="divider">
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-5">
+        {{ 'nettomiete' | transSrv }}
+    </div>
+    <div class="col-xs-3 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ (edc.estate.nettomiete ) / 12 | number : 0 }} 
+    </div>
+    <div class="col-xs-4 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ (edc.estate.nettomiete ) | number : 0 }} 
+    </div>
+</div>
+<hr class="divider" />
+<div class="row">
+    <div class="col-xs-5">
+        {{'ausfallrisiko' | transSrv }}
+    </div>
+    <div class="col-xs-7 text-right">
+     &#037;&nbsp;{{ edc.estate.ausfallrisiko | number : 2 }} 
+ </div>
+</div>
+<div class="row">
+    <div class="col-xs-5">
+        {{ 'einnahmedynamic' | transSrv }}
+    </div>
+    <div class="col-xs-7 text-right">
+        &#037;&nbsp;{{ (edc.estate.einnahmedynamic )  | number : 2 }} 
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-5">
+        {{ 'kostendynamic' | transSrv }}
+    </div>
+    <div class="col-xs-7 text-right">
+        &#037;&nbsp;{{ (edc.estate.kostendynamic )  | number : 2 }} 
+    </div>
+</div>
+<hr class="divider" />
+<div class="row">
+    <div class="col-xs-5">
+        {{ 'nettomiete' | transSrv }}
+    </div>
+    <div class="col-xs-3 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ (edc.estate.nettomiete ) / 12 | number : 0 }} 
+    </div>
+    <div class="col-xs-4 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ (edc.estate.nettomiete ) | number : 0 }} 
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-5">
+        {{ 'ausfallrisiko' | transSrv }}
+    </div>
+    <div class="col-xs-3 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ edc.estate.ausfallrisikosum / 12 | number : 0 }} 
+        <hr class="divider" />
+    </div>
+    <div class="col-xs-4 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ edc.estate.ausfallrisikosum | number : 0 }} 
+        <hr class="divider" />
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-5">
+        {{ 'hheinnahmen' | transSrv }}
+    </div>
+    <div class="col-xs-3 text-right ">
+        {{ edc.setup.currency }}&nbsp;{{ (edc.estate.mieteinnahmensum ) / 12 | number : 0 }} 
+    </div>  
+    <div class="col-xs-4 text-right">
+        {{ edc.setup.currency }}&nbsp;{{ edc.estate.mieteinnahmensum | number : 0 }}    
+    </div>  
+</div>
+
+</div>
+</div>
+</div>
+<!-- ################ Steuer ##################################################### -->
+<div class="panel panel-default" >
+    <div class="panel-heading" ui-set="{'myAccordion': 2}" ng-click="edc.estate.panels[4] = !edc.estate.panels[4]">
+        <h5 class="panel-title" >
+            <div class="row">
+                <div class="col-xs-6">
+                    <a class="text-right" ng-click="edc.editAccordion(edc.estate.id,4)" href=""><i class="fa fa-pencil"></i></a>
+                    {{ 'steuer' | transSrv }}
+                </div>
+                <div class="col-xs-6 text-right">
+                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.steuersum | number : 0 }} 
+                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[4], 'fa-plus-circle': !edc.estate.panels[4]}"></i> 
+                </div>
+            </div>
+        </h5>
+    </div>
+    <div ng-if="edc.estate.panels[4]">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-5">
+                    {{'wohnungsanteil' | transSrv }}
+                </div>
+                <div class="col-xs-3 ">
+                 &#037;&nbsp;{{ 100 - edc.estate.grundstuecksanteil }}&nbsp;({{ edc.setup.currency }}&nbsp;{{ edc.estate.kaufpreis }})
+             </div>
+             <div class="col-xs-4 text-right">
+                 {{ edc.setup.currency }}&nbsp;{{ edc.estate.wohnungsanteilsum | number : 0 }} 
+             </div>
+         </div>
+         <div class="row">
+            <div class="col-xs-5">
+                {{'abschreibung' | transSrv }}
+            </div>
+            <div class="col-xs-3">
+             &#037;&nbsp;{{ edc.estate.abschreibung | number : 2 }}
+         </div>
+         <div class="col-xs-4 text-right">
+             {{ edc.setup.currency }}&nbsp;{{ edc.estate.abschreibungsum | number : 0 }} 
+         </div>
+     </div>
+     <hr class="divider">
+     <div class="row">
+        <div class="col-xs-5">
+            {{ 'miete' | transSrv }}
+        </div>
+        <div class="col-xs-7 text-right ">
+            {{ edc.setup.currency }}&nbsp;{{ edc.estate.grundmietesum | number : 0 }}   
+        </div>  
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            {{ 'hausverwaltung' | transSrv }}
+        </div>
+        <div class="col-xs-7 text-right ">
+            {{ edc.setup.currency }}&nbsp;{{ edc.estate.hausverwaltungsum | number : 0 }}   
+        </div>  
+    </div>
+
+    <div class="row">
+        <div class="col-xs-5">
+            {{ 'zins' | transSrv }}
+        </div>
+        <div class="col-xs-7 text-right">
+            {{ edc.setup.currency }}&nbsp;{{ edc.estate.zins / 100 * edc.estate.fremdkap | number : 0 }}    
+        </div>  
+    </div>
+    <div class="row">
+        <div class="col-xs-5">
+            {{ 'abschreibung' | transSrv }}
+        </div>
+        <div class="col-xs-3">
+            &nbsp;
+        </div>    
+        <div class="col-xs-4 text-right">
+            -&nbsp;{{ edc.setup.currency }}&nbsp;{{ edc.estate.abschreibungsum | number : 0 }}  
+            <hr class="divider">
+        </div>  
+    </div>
+
+    <div class="row">
+        <div class="col-xs-5">
+            {{ 'zubesteuern' | transSrv }}
+        </div>
+        <div class="col-xs-7 text-right ">
+            {{ edc.setup.currency }}&nbsp;{{ edc.estate.steuerbasis | number : 0 }}     
+        </div>  
+    </div>
+    <hr class="divider">
+
+    <div class="row">
+        <div class="col-xs-5">
+            {{'steuersatz' | transSrv }}
+        </div>
+        <div class="col-xs-3">
+         &#037;&nbsp;{{ edc.estate.steuer | number : 2 }}
+     </div>
+     <div class="col-xs-4 text-right">
+         {{ edc.setup.currency }}&nbsp;{{ edc.estate.steuersum | number : 0 }} 
+     </div>
+ </div>
+</div>
+</div>
+</div>
+<!-- ################ Analyse ##################################################### -->
+<div class="panel panel-default" >
+    <div class="panel-heading" ui-set="{'myAccordion': 6}" ng-click="edc.estate.panels[5] = !edc.estate.panels[5]">
+        <h5 class="panel-title" >
+            <div class="row">
+                <div class="col-xs-6">
+                    <a class="text-right btn-edit" ng-click="edc.editAccordion(edc.estate.id,5)" href=""><i class="fa fa-pencil"></i></a>
+                    {{ 'analyse' | transSrv }} 
+                </div>
+                <div class="col-xs-6 text-right">
+                    {{ edc.estate.factor | number : 0 }} 
+                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[5], 'fa-plus-circle': !edc.estate.panels[5]}"></i> 
+                </div>
+            </div>
+        </h5>
+    </div>
+    <div ng-if="edc.estate.panels[5]">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'kaufpreis' | transSrv }}/{{edc.setup.qm}}
+                </div>
+                <div class="col-xs-5 text-right">
+                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.kaufpreis / edc.estate.qm | number : 0 }} 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'miete' | transSrv }}/{{edc.setup.qm}}
+                </div>
+                <div class="col-xs-5 text-right">
+                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.grundmietesum / edc.estate.qm / 12 | number : 2 }} 
+                </div>
+            </div>
+
+            <!-- new -->
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'eigenkapitalrendite' | transSrv }}</label>
+                </div>
+                <div class="col-xs-5 text-right">
+                    &#037;&nbsp;{{ edc.estate.eigenkapitalrendite | number : 2 }} 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'objektrendite' | transSrv }}</label>
+                </div>
+                <div class="col-xs-5 text-right">
+                    &#037;&nbsp;{{ edc.estate.objektrendite | number : 2 }} 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'fremdkapnsteuer' | transSrv }}</label>
+                </div>
+                <div class="col-xs-5 text-right">
+                    &#037;&nbsp;{{ edc.estate.fremdkapnsteuer | number : 2 }} 
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'bruttomietrendite' | transSrv }}
+                </div>
+                <div class="col-xs-5 text-right">
+                    &#037;&nbsp;{{ edc.estate.bruttomietrendite | number : 2 }} 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'nettomietrendite' | transSrv }}
+                </div>
+                <div class="col-xs-5 text-right">
+                    &#037;&nbsp;{{ edc.estate.nettomietrendite | number : 2 }} 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-7">
+                    {{ 'factor' | transSrv }}&nbsp;({{ 'kaufpreis' | transSrv }}/{{ 'miete' | transSrv }})
+                </div>
+                <div class="col-xs-5 text-right">
+                    {{ edc.estate.factor | number : 0 }} 
+                </div>
+            </div>
+            <div class="row">
+                <div  google-chart  chart="chartGaugeRendite" style="float:left; height:110px; width:120px;"></div>
+                <div google-chart  chart="chartGaugeFaktor" style="float:right; height:110px; width:120px;"></div>
+            </div>                        
+        </div>
+    </div>
+</div>
+<!-- ################ cashflow  ##################################################### -->
+<div class="panel panel-default" >
+    <div class="panel-heading" ui-set="{'myAccordion': 7}" ng-click="edc.estate.panels[6] = !edc.estate.panels[6]">
+        <h5 class="panel-title" >
+            <div class="row">
+                <div class="col-xs-6">
+                    <a class="text-right" ng-click="edc.editAccordion(edc.estate.id,6)" href=""><i class="fa fa-pencil"></i></a>
+                    {{ 'cashflow' | transSrv }} 
+                </div>
+                <div class="col-xs-6 text-right">
+                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.sumueber | number : 0 }} 
+                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[6], 'fa-plus-circle': !edc.estate.panels[6]}"></i> 
+                </div>
+            </div>
+        </h5>
+    </div>
+    <div ng-if="edc.estate.panels[6]">
+        <div ng-include="'edc.estate.cashflow.html'"></div>
+    </div>
+</div>
+<!-- ################ chart restschuld ##################################################### -->
+<div class="panel panel-default" >
+    <div class="panel-heading" ui-set="{'myAccordion': 8}" ng-click="edc.estate.panels[7] = !edc.estate.panels[7]">
+        <h5 class="panel-title" >
+
+            <div class="row">
+                <div class="col-xs-6">
+                    <a class="text-right" ng-click="edc.editAccordion(edc.estate.id,7)" href=""><i class="fa fa-pencil">
+                    </i></a>    
+                    {{ 'hhchart' | transSrv }}:&nbsp;{{ 'restschuld' | transSrv }}
+                </div>  
+                <div class="col-xs-6 text-right pull-right" >
+                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.restschuld | number : 0 }} 
+                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[7], 'fa-plus-circle': !edc.estate.panels[7]}"></i> 
+                </div>
+            </div>
+
+        </h5>
+    </div>
+    <div ng-if="edc.estate.panels[7]">
+        <div class="panel-body">
+            <div google-chart class="googlechart"  chart="chartObject" style="height:600px;width:100%; "></div>
+        </div>
+    </div>
+</div>
+<!-- ################ chart chashflow  ##################################################### -->
+<div class="panel panel-default" >
+    <div class="panel-heading" ui-set="{'myAccordion': 9}" ng-click="edc.estate.panels[8] = !edc.estate.panels[8]">
+        <h5 class="panel-title" >
+            <div class="row">
+
+                <div class="col-xs-6">
+                    <a class="text-right" ng-click="edc.editAccordion(edc.estate.id,8)" href=""><i class="fa fa-pencil"></i></a>
+                    {{ 'hhchart' | transSrv }}:&nbsp;{{ 'cashflow' | transSrv }}
+                </div>  
+                <div class="col-xs-6 text-right pull-right" >
+                    {{ edc.setup.currency }}&nbsp;{{ edc.estate.sumueber | number : 0 }} 
+                    <i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': edc.estate.panels[8], 'fa-plus-circle': !edc.estate.panels[8]}"></i> 
+                </div>
+
+            </div>
+        </h5>
+    </div>
+    <div ng-if="edc.estate.panels[8]">
+        <div google-chart id="chart" class="googlechart" chart="chartCashflow" style="height:600px; width:100%;"></div>
+    </div>
+</div>
+</div>
+<div class="btn btn-group"> 
+    <a ng-click="edc.scrollToPos('top')"  href=""><i class="fa fa-chevron-up fa-lg"></i></a>
+</div>  
+</estate-calc>
+</div>    
+</div>    
+</div>
+
+<div ui-content-for="navbarAction">
+ 
+    <a ui-turn-on='myDropdown' class='btn'><i class="fa fa-th-large fa-lg btngold"></i></a>
+    <ul class="dropdown-menu btngold"
+    ui-outer-click="Ui.turnOff('myDropdown')"
+    ui-outer-click-if="Ui.active('myDropdown')"
+    ui-show="myDropdown"
+    ui-state="myDropdown"
+    ui-turn-off="myDropdown">
+    <li><a class="btn" ng-click="edc.editAction(edc.estate.id)"><i class="fa fa-pencil fa-lg btngold"></i></a></li>
+    <li><a class="btn" ui-turn-on="info"><i class="fa fa-info-circle fa-lg text-left btngold"></i></a></li>
+    <li><a class="btn" ng-click="edc.printAction('printable')"><i class="fa fa-share-square-o fa-lg btngold"></i></a></li>
+    <li><a class="btn" ng-click="edc.copyEstate(edc.estate.id)"><i class="fa fa-copy fa-lg btngold"></i></a></li>
+    <li><a class="btn" href="#/estate/{{edc.estate.id}}/delete"><i class="fa fa-trash-o fa-lg btngold"></i></a></li>
+</ul>
+
+</div>
+
+
+<div ui-content-for="modals">
+    <div ng-include="'info.html'"></div>
+    <div ng-include="'map.html'"></div>
+    <div ng-include="'www.html'"></div>
+</div> 
+

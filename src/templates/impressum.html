@@ -1,0 +1,123 @@
+<div class="navbar-brand navbar-brand-center"  ui-content-for="title">
+  <div>{{ 'hhimpressum' | transSrv }}</div>
+</div>
+
+<div class="scrollable">  
+  <div class="scrollable-content">
+    <div class="section">
+      <div class="list-group text-center" id="top">
+        <div class="list-group-item list-group-item-home">
+        <!--<h4 class="home-heading text-left">{{ 'hhimpressum' | transSrv }}</h4>-->
+
+        <div class="text-left small">
+          <p>{{ 'hhangaben' | transSrv }}</p>
+          <address>
+            <strong>Bernd Martin</strong><br>
+            Anton-Bruckner-Str. 2<br>
+            85591 Vaterstetten<br>
+            Germany<br>
+            mobile: (+49) 174-7098-266<br>
+            E-mail: <a title="E-mail" ng-click="goToEmail(config.appEmail,config.appName,'');">{{ config.appEmail}}</a><br>
+            www: <a ng-click="goToLink('http://'+config.apiUrl);">{{ config.apiUrl}}</a><br>
+            twitter: <a ng-click="goToLink('http://twitter.com/'+config.appTwitter);">@{{ config.appTwitter}}</a><br>
+          </address>
+          <p>{{ 'hhumsatzid' | transSrv }}: 112/248/20935</p>
+        </div>
+      </div>  
+      <div class="list-group-item list-group-item-home">
+        <h6 class="home-heading text-left">{{ 'hhhinweisapp' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhhinweisapptxt' | transSrv : config.appName }}<br /> <br />
+          © ashamed by lincolnblues, 2008<br />
+          © New York by DAVID ILIFF, 2006
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-home">
+        <h4 class="home-heading text-left">{{ 'hhhaftausschluss' | transSrv }}</h4>
+        <ul class="list-unstyled text-left small">
+          <li><a ng-click="scrollToPos('hhinhalt')" href="">{{ 'hhinhalt' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhhaftung')" href="">{{ 'hhhaftung' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhurheberrecht')" href="">{{ 'hhurheberrecht' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhdatenschutz')" href="">{{ 'hhdatenschutz' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhnewsletter')" href="">{{ 'hhnewsletter' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhgoogle')" href="">{{ 'hhgoogle' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhfacebook')" href="">{{ 'hhfacebook' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhgoogleplus')" href="">{{ 'hhgoogleplus' | transSrv }}</a></li>
+          <li><a ng-click="scrollToPos('hhtwitter')" href="">{{ 'hhtwitter' | transSrv }}</a></li>
+        </ul>
+      </div>
+      <div class="list-group-item list-group-item-home" id="hhinhalt">
+        <h6 class="home-heading text-left">{{ 'hhinhalt' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhinhalttxt' | transSrv }}
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-home" id="hhhaftung">
+        <h6 class="home-heading text-left">{{ 'hhhaftung' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhhaftungtxt' | transSrv }}
+        </div>
+      </div>
+
+      <div class="list-group-item list-group-item-home" id="hhurheberrecht">
+        <h6 class="home-heading text-left">{{ 'hhurheberrecht' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhurheberrechttxt' | transSrv }}  
+        </div>
+      </div>
+
+      <div class="list-group-item list-group-item-home" id="hhdatenschutz">
+        <h6 class="home-heading text-left">{{ 'hhdatenschutz' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhdatenschutztxt' | transSrv }}
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-home" id="hhnewsletter">
+        <h6 class="home-heading text-left">{{ 'hhnewsletter' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhnewslettertxt' | transSrv }}
+        </div>
+      </div>
+
+      <div class="list-group-item list-group-item-home" id="hhgoogle">
+        <h6 class="home-heading text-left">{{ 'hhgoogle' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhgoogletxt' | transSrv }}
+        </div>
+      </div>
+
+      <div class="list-group-item list-group-item-home" id="hhfacebook">
+        <h6 class="home-heading text-left">{{ 'hhfacebook' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhfacebooktxt' | transSrv }}
+        </div>
+      </div>
+      <div class="list-group-item list-group-item-home" id="hhgoogleplus">
+        <h6 class="home-heading text-left">{{ 'hhgoogleplus' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhgoogleplustxt' | transSrv }}
+        </div>
+      </div>
+
+      <div class="list-group-item list-group-item-home" id="hhtwitter">
+        <h6 class="home-heading text-left">{{ 'hhtwitter' | transSrv }}</h6>
+        <div class="text-left small">
+          {{ 'hhtwittertxt' | transSrv }}
+        </div>
+      </div>
+
+
+      </div>
+      <a ng-click="scrollToPos('top')" href=""><i class="fa fa-chevron-up fa-lg"></i></a>
+    </div>
+  </div>
+</div>
+
+
+<div ui-content-for="navbarAction">
+  <div class="btn"><a ui-turn-on="info" href=""><i class="fa fa-info-circle fa-lg btngold"></i></a></div>
+</div>
+
+<div ui-content-for="modals">
+  <div ng-include="'info.html'"></div>
+</div> 

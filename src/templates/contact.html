@@ -1,0 +1,46 @@
+<div class="navbar-brand navbar-brand-center"  ui-content-for="title">
+  <div>{{ 'hhkontakt' | transSrv }}</div>
+</div>
+
+<div class="scrollable">  
+  <div class="scrollable-content">
+    <div class="section">
+      <div class="list-group text-center" id="top">
+        <div class="list-group-item list-group-item-home">
+          <h4 class="home-heading">{{ 'hhkontaktus' | transSrv }}</h4>
+          {{ 'hhcontactintro' | transSrv : mc.config.appName }}</br>
+          {{ 'hhcontactintro2' | transSrv : mc.config.appName }} Twitter: #{{ mc.config.appHashWish }}</br>
+          <a class="btn text-gold" ng-click="mc.sendTweet('I wish this app would ... #'+mc.config.appHashWish+' @'+mc.config.appTwitter)"><i class="fa fa-twitter fa-3x text-gold"></i></a>
+    
+        </div>
+        <div class="list-group-item list-group-item-home">
+          <h4 class="home-heading">{{ 'hhneedhelp' | transSrv }}</h4>
+          {{ 'hhneedhelptxt' | transSrv }}</br>
+          <a class="btn" ui-turn-on="info" href=""><i class="fa fa-info-circle fa-3x text-gold"></i></a>
+        </div>
+        <div class="list-group-item list-group-item-home">
+          <address>
+            <strong>Bernd Martin</strong>, Dipl.-Ing.(FH)<br>
+            Anton-Bruckner-Str. 2<br>
+            85591 Vaterstetten<br>
+            Germany<br>
+            E-mail: <a title="E-mail" ng-click="mc.goToEmail(mc.config.appEmail,mc.config.appName,'');">{{mc.config.appEmail}}</a><br>
+            www: <a ng-click="mc.goToLink('http://'+mc.config.apiUrl);">{{mc.config.apiUrl}}</a><br>
+            twitter: <a ng-click="mc.goToLink('http://twitter.com/'+mc.config.appTwitter);">@{{mc.config.appTwitter}}</a><br>
+          </address>
+          <a class="btn text-gold" ng-click="mc.goToEmail(mc.config.appEmail,mc.config.appName,'');"><i class="fa fa-at fa-3x text-gold"></i></a>
+        </div>
+      </div>
+      <a class="text-left" ng-click="mc.scrollToPos('top');" href=""><i class="fa fa-chevron-up fa-lg"></i></a>
+    </div>
+  </div>
+</div>
+
+
+<div ui-content-for="navbarAction">
+  <div class="btn"><a ui-turn-on="info" href=""><i class="fa fa-info-circle fa-lg btngold"></i></a></div>
+</div>
+
+<div ui-content-for="modals">
+  <div ng-include="'info.html'"></div>
+</div> 

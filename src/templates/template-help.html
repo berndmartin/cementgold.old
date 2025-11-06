@@ -1,0 +1,11 @@
+<div class="input-group">
+	<div class="input-group-addon">
+    	<i class="fa fa-search"></i>
+    </div>
+    <input class="form-control model-text" type="text" id="model" ng-model="model" placeholder="{{prompt}}" ng-keydown="selected=false"/>
+</div>
+<div class="items" ng-hide="!model.length || selected">
+    <div class="item" ng-repeat="item in items | filter:model track by $index" ng-click="handleSelection(item[title],item[subtitle])" style="cursor:pointer"  ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">
+    	<p class="title" style="margin-left: 50px">{{item[title]}}</p>
+    </div>
+</div>

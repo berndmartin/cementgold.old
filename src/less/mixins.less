@@ -1,0 +1,41 @@
+@media print {
+	
+	body, html, .section, #wrapper {
+		width: 100%;
+		margin: 0; 
+		float: none !important; 
+		min-height: 6500px;
+		orientation: portrait;
+	}
+
+
+	.btn, .btn-edit, .fa {
+	display:none;
+	}
+
+	.row {
+		display: block;
+		page-break-inside: avoid;
+		page-break-before: auto;
+		page-break-after: auto;
+	}
+	.panel, .panel-body, .panel-heading {
+		display:block;
+		page-break-inside:avoid !important;
+		page-break-after:auto;
+		page-break-before:auto;
+	}
+	.panel-heading {
+		font-size: 14px;
+	}
+	.panel-body {
+		font-size: 12px;
+
+	}
+	.googlechart {
+		width: auto;
+		margin-right: 0;
+		margin-left: -130px;
+	}
+}
+

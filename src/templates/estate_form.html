@@ -1,0 +1,1458 @@
+<div class="navbar-brand navbar-brand-center"  ui-content-for="title">
+	<div ng-if="!efc.isEditMode">{{ 'hhneuanlage' | transSrv }}</div>
+	<div ng-if="efc.isEditMode">{{ 'hheditieren' | transSrv }}</div>
+</div>
+
+<div class="scrollable">
+	<div class="scrollable-content">
+		<div class="section">
+			<form name="efc.estateForm" id="top" novalidate>
+				<estate-calc>
+				<div class="inputs">
+
+					<div class="panel-group" ui-state='myAccordion' ui-default='{{efc.accordion}}'>
+						<!-- ################ Objekt              ##################################################### -->
+						<div class="panel panel-default" id="panel0">
+							<div class="panel-heading"  ng-click="efc.estate.panels[0] = !efc.estate.panels[0]" >
+								<h5 class="panel-title" >
+
+									<div class="row">
+										<div class="col-xs-6">
+											{{ efc.estate.title | limitTo: 12 }}{{ efc.estate.title.length > 12 ? '..' : ''}}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.estate.qm | number : 0 }}&nbsp;{{ efc.setup.qm }}
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[0], 'fa-plus-circle': !efc.estate.panels[0]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+							<div ng-if="efc.estate.panels[0]"  >
+								<div class="panel-body">
+									
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="title">{{ 'title' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<input 	type="text" 
+      														placeholder="{{ 'title' | transSrv }}..." 
+      														ng-model="efc.estate.title" 
+      														ng-model-options="{ debounce: 500 }"
+      														ng-click="efc.updateHelp('title')"
+															name="title" 
+															id="title" 
+															class="form-control" 
+															required	
+															/>
+												<span ng-show="efc.estateForm.title.$dirty && efc.estateForm.title.$invalid">
+													{{ 'input' | transSrv : ( 'title' | transSrv ) }}
+												</span>
+												<span class="error" ng-show="efc.estateForm.title.$error.required">{{'required' | transSrv }}</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="qm">{{ 'flaeche' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>{{ efc.setup.qm }}</small></div>
+												<input 	type="number" 
+      														placeholder="{{ 'flaeche' | transSrv }}..." 
+      														ng-model="efc.estate.qm" 
+      														ng-model-options="{ debounce: 500 }"
+      														ng-click="efc.updateHelp('flaeche')"
+															name="qm" 
+															id="qm" 
+															class="form-control" 	
+															ng-pattern="/^\d{0,6}(\.\d{1,2})?$/"
+															max="100000"
+															min="1"
+															required
+															/>
+												</div>
+												<span ng-show="efc.estateForm.qm.$dirty && efc.estateForm.qm.$invalid">
+													{{ 'input' | transSrv : ( 'flaeche' | transSrv ) }}
+												</span>
+												<span class="error" ng-show="efc.estateForm.qm.$error.required">{{'required' | transSrv }}</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="grundstuecksanteil">{{'grundstuecksanteil' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'grundstuecksanteil' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100"
+													       aria-describedby="grundstuecksanteil" 
+													       ng-click="efc.updateHelp('grundstuecksanteil')"
+													       ng-model="efc.estate.grundstuecksanteil" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="grundstuecksanteil" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.grundstuecksanteil.$dirty && efc.estateForm.grundstuecksanteil.$invalid">
+													{{ 'inputpercent' | transSrv : ( 'grundstuecksanteil' | transSrv ) }} 
+												</span>		
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="baujahr">{{ 'baujahr' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<input 	type="text" 
+      														placeholder="{{ 'baujahr' | transSrv }}..." 
+      														ng-model="efc.estate.baujahr" 
+      														ng-model-options="{ debounce: 500 }"
+      														ng-click="efc.updateHelp('baujahr')"
+															name="baujahr" 
+															id="baujahr" 
+															class="form-control" 	
+															/>
+												<span ng-show="efc.estateForm.baujahr.$dirty && efc.estateForm.baujahr.$invalid">
+													{{ 'input' | transSrv : ( 'baujahr' | transSrv ) }}
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="plz">{{ 'plz' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<input 	type="text" 
+      														placeholder="{{ 'plz' | transSrv }}..." 
+      														ng-model="efc.estate.plz" 
+      														ng-model-options="{ debounce: 500 }"
+      														ng-click="efc.updateHelp('plz')"
+															name="plz" 
+															id="plz" 
+															class="form-control" 	
+															/>
+												<span ng-show="efc.estateForm.plz.$dirty && efc.estateForm.plz.$invalid">
+													{{ 'input' | transSrv : ( 'plz' | transSrv ) }}
+												</span>
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="address">{{ 'address' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group">
+												<input 	type="text" 
+      														placeholder="{{ 'address' | transSrv }}..." 
+      														ng-model="efc.estate.address" 
+      														ng-model-options="{ debounce: 500 }"
+															name="address" 
+															ng-click="efc.updateHelp('address')"
+															id="address" 
+															class="form-control" 	
+															/>
+													<span class="input-group-addon"><a ng-disabled="efc.estateForm.address.$dirty && efc.estateForm.address.$invalid" ui-turn-on="map"><i class="fa fa-map-marker fa-fw"></i></a></span>				
+												</div>			
+												<span ng-show="efc.estateForm.address.$dirty && efc.estateForm.address.$invalid">
+													{{ 'input' | transSrv : ( 'address' | transSrv ) }}
+												</span>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="url">{{ 'anbieter' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group">
+													<input 	type="url" 
+	      														placeholder="{{ 'hhlink' | transSrv }}..." 
+	      														ng-model="efc.estate.url" 
+	      														ng-model-options="{ debounce: 500 }"
+	      														ng-click="efc.updateHelp('anbieter')"
+																name="url" 
+																id="url" 
+																class="form-control" 	
+																/>
+													<span class="input-group-addon"><a ng-disabled="efc.estateForm.url.$dirty && efc.estateForm.url.$invalid" ui-turn-on="www"><i class="fa fa-globe fa-fw"></i></a></span>	
+												</div>
+												<span ng-show="efc.estateForm.url.$dirty && efc.estateForm.url.$invalid">
+													{{ 'input' | transSrv : ( 'hhlink' | transSrv ) }}
+												</span>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="baujahr">{{ 'remark' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<textarea class="form-control" ng-model="efc.estate.remark" ng-model-options="{ debounce: 500 }"  name="remark" id="remark" rows="2" placeholder="Bemerkung">{{ efc.estate.remark }}</textarea>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>	
+						
+						<!-- ################ checkliste          ##################################################### -->
+						<!--
+						<div class="panel panel-default" id="panel9" >
+
+							<div class="panel-heading" ui-set="{'myAccordion': 9}" ng-click="efc.estate.panels[9] = !efc.estate.panels[9]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'checkliste' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.sumueber | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[9], 'fa-plus-circle': !efc.estate.panels[9]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+
+							<div ng-if="efc.estate.panels[9]">
+								<div class="panel-body">
+									Werterhöhende Faktoren
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small">{{ 'bath' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right">
+											<rating ng-model="efc.estate.checklist.bath" 
+													max="5" 
+													readonly="false" 
+											        >
+											</rating>
+
+										</div>
+									</div>
+									<hr class="divider" />
+									Wertmindernde Faktoren
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small">{{ 'miete' | transSrv }}/{{setup.qm}}</label>
+											</div>
+											<div class="col-xs-5 small text-right">
+												{{ efc.setup.currency }}&nbsp;{{ estate.grundmietesum / efc.estate.qm / 12 | number : 2 }} 
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div> 
+						-->
+
+						<!-- ################ Investitionskosten ##################################################### -->
+						<div class="panel panel-default" id="panel1">
+
+							<div class="panel-heading" ui-set="{'myAccordion': 2}" ng-click="efc.estate.panels[1] = !efc.estate.panels[1]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'investitionskosten' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.totalprice | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[1], 'fa-plus-circle': !efc.estate.panels[1]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+
+
+							<div ng-if="efc.estate.panels[1]" >
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-xs-9 col-xs-offset-3 small">
+											{{ efc.setup.currency }}/{{ efc.setup.qm }}&nbsp;{{  efc.estate.kaufpreis / efc.estate.qm | number : 0 }} 	
+										</div>
+									</div>	
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" 
+												for="kaufpreis" style="margin:0">{{ 'kaufpreis' | transSrv }}
+												</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group">
+    	  											<div class="input-group-addon small">{{ efc.setup.currency }}</div>
+      												<input 	type="number" 
+      														placeholder="{{ 'kaufpreis' | transSrv }}..." 
+      														ng-model="efc.estate.kaufpreis" 
+      														ng-model-options="{ debounce: 500 }"
+															name="kaufpreis" 
+															id="kaufpreis" 
+															ng-click="efc.updateHelp('kaufpreis')"
+															class="form-control" 	
+															ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+															value="0"
+															min="0"
+															required />
+												</div>
+												<span ng-show="efc.estateForm.kaufpreis.$dirty && efc.estateForm.kaufpreis.$invalid">
+													{{ 'inputprice' | transSrv : ( 'kaufpreis' | transSrv ) }}
+												</span>
+												<span class="error" ng-show="efc.estateForm.kaufpreis.$error.required">{{'required' | transSrv }}</span>
+											</div>
+										</div>
+									</div>		
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="makler">{{'makler' | transSrv }}</label>
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'makler' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       aria-describedby="makler"
+													       ng-click="efc.updateHelp('makler')" 
+													       ng-model="efc.estate.makler" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="makler" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.makler.$dirty && efc.estateForm.makler.$invalid">
+													{{ 'inputpercent' | transSrv : ( 'makler' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.maklergeb | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="grerwst">{{'grerwst' | transSrv }}</label>
+												
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'grerwst' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100"
+													       ng-click="efc.updateHelp('grerwst')" 
+													       aria-describedby="grerwst" 
+													       ng-model="efc.estate.grerwst" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="grerwst" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.grerwst.$dirty && efc.estateForm.grerwst.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'grerwst' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.grerwstgeb | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="notar">{{'notar' | transSrv }}</label>
+												
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'notar' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       aria-describedby="notar" 
+													       ng-click="efc.updateHelp('notar')"
+													       ng-model="efc.estate.notar" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="notar" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.notar.$dirty && efc.estateForm.notar.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'notar' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.notargeb | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="grundbuch">{{ 'grundbuch' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group">
+    	  											<div class="input-group-addon small">{{ efc.setup.currency }}</div>
+      												<input 	type="number" 
+      														placeholder="{{ 'grundbuch' | transSrv }}..." 
+      														ng-model="efc.estate.grundbuch" 
+      														ng-model-options="{ debounce: 500 }"
+															name="grundbuch" 
+															id="grundbuch" 
+															ng-click="efc.updateHelp('grundbuch')"
+															class="form-control" 	
+															ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+															value="0"
+															min="0"
+															 />
+												</div>
+												<span ng-show="efc.estateForm.grundbuch.$dirty && efc.estateForm.grundbuch.$invalid">
+													{{ 'inputprice' | transSrv : ( 'grundbuch' | transSrv ) }}
+												</span>
+											</div>
+										</div>
+									</div>	
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="sonstigekosten">{{ 'sonstigekosten' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group">
+    	  											<div class="input-group-addon small">{{ efc.setup.currency }}</div>
+      												<input 	type="number" 
+      														placeholder="{{ 'sonstigekosten' | transSrv }}..." 
+      														ng-model="efc.estate.sonstigekosten" 
+      														ng-model-options="{ debounce: 500 }"
+															name="sonstigekosten" 
+															id="sonstigekosten" 
+															ng-click="efc.updateHelp('sonstigekosten')"
+															class="form-control" 	
+															ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+															value="0"
+															min="0"  />
+												</div>
+												<span ng-show="efc.estateForm.sonstigekosten.$dirty && efc.estateForm.sonstigekosten.$invalid">
+													{{ 'inputprice' | transSrv : ( 'sonstigekosten' | transSrv ) }}
+												</span>
+											</div>
+										</div>
+									</div>
+									<hr class="divider" />
+
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right">{{ 'kaufpreis' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{  efc.estate.kaufpreis | number : 0 }} 	
+										</div>	
+									</div>
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right">{{ 'kaufnebenkosten' | transSrv }}&nbsp;&sum;</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											+&nbsp;{{ efc.setup.currency }}&nbsp;{{ efc.estate.notargeb + efc.estate.grerwstgeb + efc.estate.maklergeb + efc.estate.grundbuch + efc.estate.sonstigekosten | number : 0 }} 	
+										</div>	
+										<hr class="divider">
+									</div>
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right">{{ 'investitionskosten' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.kaufpreis + efc.estate.notargeb + efc.estate.grerwstgeb +  estate.maklergeb + efc.estate.grundbuch + efc.estate.sonstigekosten | number : 0 }} 	
+										</div>	
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- ################ Finanzierung ##################################################### -->
+						<div class="panel panel-default" id="panel2">
+
+							<div class="panel-heading" ng-click="efc.estate.panels[2] = !efc.estate.panels[2]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'finanzierung' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.fremdkap | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[2], 'fa-plus-circle': !efc.estate.panels[2]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+
+							<div ng-if="efc.estate.panels[2]">
+								<div class="panel-body">
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small pull-right">{{ 'hhberechnungsgrundlage' | transSrv }}</label>
+											</div>
+											<div class="col-xs-4">
+												<ui-switch ng-model='efc.estate.finanzinklnk' ng-model-options="{ debounce: 500 }" name="finanzinklnk" area-describedby="finanzinklnk"></ui-switch>
+												<label class="small">{{ 'hhinklusive' | transSrv }}&nbsp;{{ 'kaufnebenkosten' | transSrv }}</label>
+	   										</div>
+											<div class="col-xs-5 small text-right">
+												{{ efc.setup.currency }}&nbsp;{{ efc.estate.finanzierung | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small pull-right">{{ 'eigenkapital' | transSrv }}</label>
+											</div>
+											<div class="col-xs-4 small">
+												&#037;&nbsp;{{ efc.estate.eigenkapper | number : 2 }} 
+											</div>
+											<div class="col-xs-5 small text-right">
+												{{ efc.setup.currency }}&nbsp;{{ efc.estate.eigenkap | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-4">
+												<div class="btn-group btn-mini pull-right" ui-state="efc.myEigenkap" ui-default='{{efc.eigenfix}}'>
+													<a href class="btn btn-default {{efc.eigenfix1}}" ui-set="{'efc.myEigenkap': 1}" ui-exclusion-group='myButtons' ng-click="efc.eigenfixbtn(1)"><small>&#037;</small></a>
+												    <a href class="btn btn-default  {{efc.eigenfix2}}" ui-set="{'efc.myEigenkap': 2}" ui-exclusion-group='myButtons' ng-click="efc.eigenfixbtn(2)"><small>{{ efc.setup.currency }}</small></a>
+												</div>
+											</div>
+											<div class="col-xs-8">
+												<div ui-if="efc.myEigenkap == 1">
+													<div class="input-group small">
+														<div class="input-group-addon small"><small>&#037;</small></div>
+														<input type="number" 
+															       placeholder="{{ 'eigenkapital' | transSrv }}&nbsp;&#037;..." 
+															       min="0" 
+															       max="100" 
+															       aria-describedby="eigenkapper" 
+															       ng-click="efc.updateHelp('eigenkapital')" 
+															       ng-model="efc.estate.eigenkapper" 
+															       ng-model-options="{ debounce: 500 }"
+															       name="eigenkapper" 
+															       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+															       class="form-control"/>
+													</div>
+													<span ng-show="efc.estateForm.eigenkapper.$dirty && efc.estateForm.eigenkapper.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'eigenkapital' | transSrv ) }} 
+													</span>
+												</div>
+												<div ui-if="myEigenkap == 2">
+													<div class="input-group small">
+														<div class="input-group-addon small">{{ efc.setup.currency }}</div>
+														<input type="number" 
+															       placeholder="{{ 'eigenkapital' | transSrv }}&nbsp;{{ efc.setup.currency }}..." 
+															       min="0" 
+															       aria-describedby="eigenkap" 
+															       ng-click="efc.updateHelp('eigenkapital')" 
+															       ng-model="efc.estate.eigenkap" 
+															       ng-model-options="{ debounce: 500 }"
+															       name="eigenkap" 
+															       ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+															       class="form-control"/>
+													</div>	
+													<span ng-show="efc.estateForm.eigenkap.$dirty && efc.estateForm.eigenkap.$invalid">
+														{{ 'inputprice' | transSrv : ( 'eigenkapital' | transSrv ) }} 
+													</span>		
+												</div>		
+											</div>
+
+										</div>
+									</div>		
+			
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small pull-right" >{{ 'fremdkapital' | transSrv }}</label>
+											</div>
+											<div class="col-xs-4 small">
+												&#037;&nbsp;{{ efc.estate.fremdkapper | number : 2 }} 
+											</div>
+											<div class="col-xs-5 small text-right">
+												{{ efc.setup.currency }}&nbsp;{{ efc.estate.fremdkap | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="zins">{{'zins' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5">
+												<div class="input-group">
+													<div class="input-group-addon small" ><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'zins' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       aria-describedby="zins" 
+													       ng-click="efc.updateHelp('zins')" 
+													       ng-model="efc.estate.zins" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="zins" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.zins.$dirty && efc.estateForm.zins.$invalid">
+													{{ 'inputpercent' | transSrv : ( 'zins' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-4 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.zins / 100 * efc.estate.fremdkap / 12 | number : 2 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="tilgung">{{'tilgung' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'tilgung' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       aria-describedby="tilgung" 
+													       ng-click="efc.updateHelp('tilgung')" 
+													       ng-model="efc.estate.tilgung" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="tilgung" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.tilgung.$dirty && efc.estateForm.tilgung.$invalid">
+													{{ 'inputpercent' | transSrv : ( 'tilgung' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-4 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ efc.estate.tilgung / 100 * efc.estate.fremdkap / 12 | number : 2 }} 
+					                            <hr class="divider" />
+
+											</div>
+										</div>
+									</div>
+
+		                            <div class="row">
+		                                <div class="col-xs-7">
+		                            		<label class="small pull-right">{{'hhersterate' | transSrv }}&nbsp;&sum;&nbsp;{{ 'hhmonatlich' | transSrv }}</label>
+									    </div>
+		                                <div class="col-xs-5 text-right small">
+		                                   {{ efc.setup.currency }}&nbsp;{{ (efc.estate.zins / 100 * efc.estate.fremdkap / 12) + (efc.estate.tilgung / 100 * efc.estate.fremdkap / 12 ) | number : 2 }} 
+		                                </div>
+		                            </div>
+		                            <div class="row">
+		                                <div class="col-xs-7">
+		                            		<label class="small pull-right">{{'hhersterate' | transSrv }}&nbsp;&sum;&nbsp;{{ 'hhperannum' | transSrv }}&nbsp;({{ 'annuitaet' | transSrv }})</label>
+									    </div>
+		                                <div class="col-xs-5 text-right small">
+		                                   {{ efc.setup.currency }}&nbsp;{{ (efc.estate.zins / 100 * efc.estate.fremdkap) + (efc.estate.tilgung / 100 * efc.estate.fremdkap) | number : 2 }} 
+		                                </div>
+		                            </div>
+		                            <hr class="divider" />
+
+									<!--
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="bearbeitunggebuehrper">{{'gebuehren' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'bearbeitunggebuehrper' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       aria-describedby="bearbeitunggebuehrper"
+													       ng-click="efc.updateHelp('bearbeitunggebuehrper')"  
+													       ng-model="efc.estate.bearbeitunggebuehrper" 
+													       name="bearbeitunggebuehrper" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.bearbeitunggebuehrper.$dirty && efc.estateForm.bearbeitunggebuehrper.$invalid">
+													{{ 'inputpercent' | transSrv : ( 'bearbeitunggebuehrper' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-4 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.bearbeitunggebuehrper / 100 * efc.estate.fremdkap | number : 2 }} 
+											</div>
+										</div>
+									</div>
+									-->
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="laufzeit">{{'laufzeit' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<div class="input-group" ng-show="!efc.estate.infinite" ng-hide="efc.estate.infinite">
+													<div class="input-group-addon small"><small>{{'jahre' | transSrv }}</small></div>
+													<input type="number" 
+													       placeholder="{{ 'laufzeit' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="999"
+													       aria-describedby="laufzeit" 
+													       ng-click="efc.updateHelp('laufzeit')" 
+													       ng-model="efc.estate.laufzeit" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="laufzeit" 
+													       ng-pattern="/^[0-9]{1,3}$/"
+													       ng-disabled="efc.estate.infinite"
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.laufzeit.$dirty && efc.estateForm.laufzeit.$invalid">
+													{{ 'input' | transSrv : ( 'laufzeit' | transSrv ) }} 
+												</span>		
+												<div class="input-group" ng-show="efc.estate.infinite" ng-hide="!efc.estate.infinite">
+													<div class="input-group-addon small"><small>{{'jahre' | transSrv }}</small></div>
+													<input type="number" 
+													       value="{{ efc.estate.years | number : 0 }}" 
+													       ng-disabled="efc.estate.infinite"
+													       name="shaddowlaufzeit"
+													       ng-hide="!efc.estate.infinite"
+													       ng-click="efc.updateHelp('laufzeit')" 
+													       ng-show="efc.estate.infinite"
+													       class="form-control"/>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="big control-label pull-right" for="infinite">&infin;</label>
+											</div>
+											<div class="col-xs-4">
+												<ui-switch ng-model='efc.estate.infinite' ng-model-options="{ debounce: 500 }" name="infinite" area-describedby="infinite"></ui-switch>
+	   										</div>
+	   										<div class="col-xs-5 text-right small">
+	   											<label class="control-label">{{'restschuld' | transSrv }}</label>&nbsp;{{ efc.setup.currency }}&nbsp;{{ efc.estate.restschuld | number : 0 }} 
+											</div>
+										</div>
+									</div>
+									<hr class="divider" />
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="startdate">{{'startdatum' | transSrv }}</label>
+											</div>
+											<div class="col-xs-9">
+												<input type="date" 
+												       value="efc.estate.startdate"
+												       min="2000-01-01" 
+												       max="9999-12-31" 
+												       aria-describedby="startdate" 
+												       ng-click="efc.updateHelp('startdate')" 
+												       ng-model="efc.estate.parsedDate" 
+												       ng-model-options="{ debounce: 500 }" 
+												       name="startdate" 
+												       class="form-control"
+												       required />
+												<span ng-show="efc.estateForm.startdate.$dirty && efc.estateForm.startdate.$invalid">
+													{{ 'input' | transSrv : ( 'startdatum' | transSrv ) }} 
+												</span>	
+												<span class="error" ng-show="efc.estateForm.startdate.$error.required">{{'required' | transSrv }}</span>	
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+
+						<!-- ################ Miete ##################################################### -->
+						<div class="panel panel-default" id="panel3">
+
+							<div class="panel-heading"  ng-click="efc.estate.panels[3] = !efc.estate.panels[3]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'miete' | transSrv }}&nbsp;{{ 'hhperannum' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.grundmietesum | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[3], 'fa-plus-circle': !efc.estate.panels[3]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+
+							<div ng-if="efc.estate.panels[3]">
+								<div class="panel-body">
+									<div class="row">
+										<div class="col-xs-3 small">
+											&nbsp;	
+										</div>	
+										<div class="col-xs-6 small">
+											{{ 'hhmonatlich' | transSrv }}
+										</div>	
+										<div class="col-xs-3 small text-right">
+											{{ 'hhperannum' | transSrv }}
+										</div>
+									</div>	
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="grundmiete">{{ 'miete' | transSrv }}</label>
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+    	  											<div class="input-group-addon small">{{ efc.setup.currency }}</div>
+      												<input 	type="number" 
+      														placeholder="{{ 'miete' | transSrv }}..." 
+      														ng-model="efc.estate.grundmiete" 
+      														ng-model-options="{ debounce: 500 }"
+															name="grundmiete" 
+															id="grundmiete" 
+															ng-click="efc.updateHelp('grundmiete')" 
+															class="form-control" 	
+															ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+															value="0"
+															min="0"
+															/>
+												</div>
+												<span ng-show="efc.estateForm.grundmiete.$dirty && efc.estateForm.grundmiete.$invalid">
+													{{ 'inputprice' | transSrv : ( 'miete' | transSrv ) }}
+												</span>
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.grundmietesum | number : 0 }} 
+											</div>
+										</div>
+									</div>		
+
+									<div class="row">
+										<div class="col-xs-3">
+										</div>
+										<div class="col-xs-6 small">
+											{{ efc.setup.currency }}/{{ efc.setup.qm }}&nbsp;{{ estate.grundmietesum / efc.estate.qm / 12 | number : 2 }}
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="hausverwaltung">{{ 'hausverwaltung' | transSrv }}</label>
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+    	  											<div class="input-group-addon small">{{ efc.setup.currency }}</div>
+      												<input 	type="number" 
+      														placeholder="{{ 'hausverwaltung' | transSrv }}..." 
+      														ng-model="efc.estate.hausverwaltung" 
+      														ng-model-options="{ debounce: 500 }"
+															name="hausverwaltung" 
+															ng-click="efc.updateHelp('hausverwaltung')" 
+															id="hausverwaltung" 
+															class="form-control" 	
+															ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+															value="0"
+															min="0" />
+												</div>
+												<span ng-show="efc.estateForm.hausverwaltung.$dirty && efc.estateForm.hausverwaltung.$invalid">
+													{{ 'inputprice' | transSrv : ( 'hausverwaltung' | transSrv ) }}
+												</span>
+
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ efc.estate.hausverwaltungsum | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="instandhaltungsruecklagen">{{'ruecklagen' | transSrv }}</label>
+												
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small">{{ efc.setup.currency }}</div>
+													<input type="number" 
+													       placeholder="{{ 'ruecklagen' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       aria-describedby="instandhaltungsruecklagen" 
+													       ng-model="efc.estate.instandhaltungsruecklagen" 
+													       ng-model-options="{ debounce: 500 }" 
+													       ng-click="efc.updateHelp('instandhaltungsruecklagen')" 
+													       name="instandhaltungsruecklagen" 
+													       ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.instandhaltungsruecklagen.$dirty && 
+															   efc.estateForm.instandhaltungsruecklagen.$invalid">
+													{{ 'inputprice' | transSrv : ( 'ruecklagen' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ efc.estate.instandhaltungsruecklagensum | number : 0 }} 
+											</div>
+										</div>
+									</div>
+
+									<hr class="divider" />
+
+									<div class="row">
+										<div class="col-xs-3">
+											<label class="small pull-right">{{ 'nonumlagefaehignebenkosten' | transSrv }}
+											</label>
+										</div>
+										<div class="col-xs-6 small">
+											-&nbsp;{{ efc.setup.currency }}&nbsp;{{ (efc.estate.hausverwaltungsum + efc.estate.instandhaltungsruecklagensum ) / 12 | number : 0 }} 
+										</div>	
+										<div class="col-xs-3 text-right small">
+											-&nbsp;{{ efc.setup.currency }}&nbsp;{{  efc.estate.hausverwaltungsum + efc.estate.instandhaltungsruecklagensum  | number : 0 }} 	
+										</div>	
+										<hr class="divider">
+									</div>
+
+									<div class="row">
+										<div class="col-xs-3">
+											<label class="small pull-right">{{ 'nettomiete' | transSrv }}</label>
+										</div>
+										<div class="col-xs-6 small">
+											{{ efc.setup.currency }}&nbsp;{{ (efc.estate.grundmietesum - efc.estate.hausverwaltungsum - efc.estate.instandhaltungsruecklagensum) / 12 | number : 0 }} 
+										</div>	
+										<div class="col-xs-3 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.grundmietesum - efc.estate.hausverwaltungsum - efc.estate.instandhaltungsruecklagensum  | number : 0 }} 
+										</div>	
+									</div>
+									<hr class="divider" />
+
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="ausfallrisiko">{{'ausfallrisiko' | transSrv }}</label>
+												
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'ausfallrisiko' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       aria-describedby="ausfallrisiko"
+													       ng-click="efc.updateHelp('ausfallrisiko')"  
+													       ng-model="efc.estate.ausfallrisiko" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="ausfallrisiko" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.ausfallrisiko.$dirty && efc.estateForm.ausfallrisiko.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'ausfallrisiko' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.ausfallrisikosum | number : 0 }} 
+											</div>
+
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="einnahmedynamic">{{'einnahmedynamic' | transSrv }}</label>
+												
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'einnahmedynamic' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       ng-click="efc.updateHelp('einnahmedynamic')" 
+													       aria-describedby="einnahmedynamic" 
+													       ng-model="efc.estate.einnahmedynamic" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="einnahmedynamic" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.einnahmedynamic.$dirty && efc.estateForm.einnahmedynamic.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'einnahmedynamic' | transSrv ) }} 
+												</span>		
+											</div>
+										</div>
+									</div>
+
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="kostendynamic">{{'kostendynamic' | transSrv }}</label>
+												
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'kostendynamic' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       aria-describedby="kostendynamic" 
+													       ng-click="efc.updateHelp('kostendynamic')" 
+													       ng-model="efc.estate.kostendynamic" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="kostendynamic" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.kostendynamic.$dirty && efc.estateForm.kostendynamic.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'kostendynamic' | transSrv ) }} 
+												</span>		
+											</div>
+										</div>
+									</div>
+									
+									<hr class="divider" />
+									<div class="row">
+										<div class="col-xs-3">
+											<label class="small pull-right">{{ 'hheinnahmen' | transSrv }}</label>
+										</div>
+										<div class="col-xs-6 small">
+											{{ efc.setup.currency }}&nbsp;{{ (efc.estate.mieteinnahmensum ) / 12 | number : 0 }} 
+										</div>	
+										<div class="col-xs-3 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.mieteinnahmensum | number : 0 }} 	
+										</div>	
+									</div>
+
+								</div>
+							</div>
+						</div>
+
+						<!-- ################ Steuer ##################################################### -->
+						<div class="panel panel-default" id="panel4">
+
+							<div class="panel-heading" ui-set="{'myAccordion': 5}" ng-click="efc.estate.panels[4] = !efc.estate.panels[4]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'steuer' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.steuersum | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[4], 'fa-plus-circle': !efc.estate.panels[4]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+							<div ng-if="efc.estate.panels[4]">
+								<div class="panel-body">
+								    <div class="row">
+		                                <div class="col-xs-3">
+		                            		<label class="small pull-right">{{'wohnungsanteil' | transSrv }}</label>
+									    </div>
+   		                                <div class="col-xs-6 small">
+		                                   &#037;&nbsp;{{ 100 - efc.estate.grundstuecksanteil }}&nbsp;({{ efc.setup.currency }}&nbsp;{{ efc.estate.kaufpreis }})
+		                                </div>
+		                                <div class="col-xs-3 text-right small">
+		                                   {{ efc.setup.currency }}&nbsp;{{ efc.estate.wohnungsanteilsum | number : 0 }} 
+		                                </div>
+		                            </div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small pull-right" for="abschreibung">{{'abschreibung' | transSrv }}</label>
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'abschreibung' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       ng-click="efc.updateHelp('abschreibung')" 
+													       aria-describedby="abschreibung" 
+													       ng-model="efc.estate.abschreibung" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="abschreibung" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.abschreibung.$dirty && efc.estateForm.abschreibung.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'abschreibung' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ efc.setup.currency }}&nbsp;{{ efc.estate.abschreibungsum | number : 0 }}&nbsp; 
+											</div>
+										</div>
+									</div>
+		                            <hr class="divider" />
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right">{{ 'miete' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.grundmietesum | number : 0 }} 	
+										</div>	
+									</div>
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right small">{{ 'hausverwaltung' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.hausverwaltungsum | number : 0 }} 	
+										</div>	
+									</div>
+
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right small">{{ 'zins' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.zins / 100 * efc.estate.fremdkap | number : 0 }} 	
+										</div>	
+									</div>
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right small">{{ 'abschreibung' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											-&nbsp;{{ efc.setup.currency }}&nbsp;{{ efc.estate.abschreibungsum | number : 0 }} 	
+										</div>	
+										<hr class="divider">
+									</div>
+
+									<div class="row">
+										<div class="col-xs-7">
+											<label class="small pull-right small">{{ 'zubesteuern' | transSrv }}</label>
+										</div>
+										<div class="col-xs-5 text-right small">
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.steuerbasis | number : 0 }} 	
+										</div>	
+									</div>
+									<hr class="divider">
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-3">
+												<label class="small control-label pull-right" for="steuer">{{'steuersatz' | transSrv }}</label>
+												
+											</div>
+											<div class="col-xs-6">
+												<div class="input-group">
+													<div class="input-group-addon small"><small>&#037;</small></div>
+													<input type="number" 
+													       placeholder="{{ 'steuer' | transSrv }}..." 
+													       value="0" 
+													       min="0" 
+													       max="100" 
+													       ng-click="efc.updateHelp('steuer')" 
+													       aria-describedby="steuer" 
+													       ng-model="efc.estate.steuer" 
+													       ng-model-options="{ debounce: 500 }"
+													       name="steuer" 
+													       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+													       class="form-control"/>
+												</div>
+												<span ng-show="efc.estateForm.steuer.$dirty && efc.estateForm.steuer.$invalid">
+														{{ 'inputpercent' | transSrv : ( 'steuer' | transSrv ) }} 
+												</span>		
+											</div>
+											<div class="col-xs-3 text-right small">
+												{{ 'hhperannum' | transSrv }}&nbsp;{{ efc.setup.currency }}&nbsp;{{ efc.estate.steuersum | number : 0 }} 
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- ################ Analyse ##################################################### -->
+						<div class="panel panel-default" id="panel5" >
+
+							<div class="panel-heading" ng-click="efc.estate.panels[5] = !efc.estate.panels[5]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'analyse' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.estate.factor | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[5], 'fa-plus-circle': !efc.estate.panels[5]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+							<div ng-if="efc.estate.panels[5]">
+								<div class="panel-body">
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'kaufpreis' | transSrv }}/{{setup.qm}}</label>
+											</div>
+											<div class="col-xs-5 small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.kaufpreis / efc.estate.qm | number : 0 }} 
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'miete' | transSrv }}/{{setup.qm}}</label>
+											</div>
+											<div class="col-xs-5 small">
+												{{ efc.setup.currency }}&nbsp;{{ estate.grundmietesum / efc.estate.qm / 12 | number : 2 }} 
+											</div>
+										</div>
+									</div>
+<!--    ########### -->   
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'eigenkapitalrendite' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5 small">
+												&#037;&nbsp;{{ estate.eigenkapitalrendite | number : 2 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'objektrendite' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5 small">
+												&#037;&nbsp;{{ estate.objektrendite | number : 2 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'fremdkapnsteuer' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5 small">
+												&#037;&nbsp;{{ estate.fremdkapnsteuer | number : 2 }} 
+											</div>
+										</div>
+									</div>
+
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'bruttomietrendite' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5 small">
+												&#037;&nbsp;{{ estate.bruttomietrendite | number : 2 }} 
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'nettomietrendite' | transSrv }}</label>
+											</div>
+											<div class="col-xs-5 small">
+												&#037;&nbsp;{{ estate.nettomietrendite | number : 2 }} 
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<div class="col-xs-7">
+												<label class="small pull-right">{{ 'factor' | transSrv }}&nbsp;({{ 'kaufpreis' | transSrv }}/{{ 'miete' | transSrv }})</label>
+											</div>
+											<div class="col-xs-5 small">
+												{{ estate.factor | number : 0 }} 
+											</div>
+										</div>
+									</div>
+									<div class="row">
+		                                <div  google-chart  chart="chartGaugeRendite" style="float:left; height:110px; width:120px;"></div>
+		                                <div google-chart  chart="chartGaugeFaktor" style="float:right; height:110px; width:120px;"></div>
+		                            </div>    
+
+								</div>
+							</div>
+						</div>
+
+						<!-- ################ cashflow  ##################################################### -->
+						<div class="panel panel-default" id="panel6" >
+
+							<div class="panel-heading" ui-set="{'myAccordion': 7}" ng-click="efc.estate.panels[6] = !efc.estate.panels[6]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'cashflow' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.sumueber | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[6], 'fa-plus-circle': !efc.estate.panels[6]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+
+							<div ng-if="efc.estate.panels[6]">
+								<div ng-include="'estate_cashflow.html'"></div>
+							</div>
+						</div>
+
+						<!-- ################ chart restschuld ##################################################### -->
+						<div class="panel panel-default" id="panel7" >
+
+							<div class="panel-heading" ui-set="{'myAccordion': 8}" ng-click="efc.estate.panels[7] = !efc.estate.panels[7]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'hhchart' | transSrv }}:&nbsp;{{ 'restschuld' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.restschuld | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[7], 'fa-plus-circle': !efc.estate.panels[7]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+
+							<div ng-if="efc.estate.panels[7]">
+								<div google-chart chart="chartObject" style="height:600px; width:100%;"></div>
+							</div>
+						</div>
+
+						<!-- ################ chart chashflow  ##################################################### -->
+						<div class="panel panel-default" id="panel8">
+
+							<div class="panel-heading"  ng-click="efc.estate.panels[8] = !efc.estate.panels[8]" >
+								<h5 class="panel-title" >
+									<div class="row">
+										<div class="col-xs-6">
+											{{ 'hhchart' | transSrv }}:&nbsp;{{ 'cashflow' | transSrv }}
+										</div>	
+										<div class="col-xs-6 text-right pull-right" >
+											{{ efc.setup.currency }}&nbsp;{{ efc.estate.sumueber | number : 0 }} 
+											<i class="fa fa-lg pull-right" ng-class="{'fa-minus-circle': efc.estate.panels[8], 'fa-plus-circle': !efc.estate.panels[8]}"></i> 
+										</div>
+									</div>
+									
+								</h5>
+							</div>
+
+							<div ng-if="efc.estate.panels[8]">
+								<div google-chart chart="chartCashflow" style="height:600px; width:100%;"></div>
+							</div>
+						</div>
+
+
+					</div>
+				</div>
+				</estate-calc>
+			</form>
+			<a ng-click="scrollToPos('top')" href=""><i class="fa fa-chevron-up fa-lg"></i></a>
+		</div>
+	</div>
+</div>
+
+
+<div ui-content-for="navbarAction">
+	
+	<a ui-turn-on='myDropdown' class='btn'><i class="fa fa-th-large fa-lg btngold"></i></a>
+	<ul class="dropdown-menu btngold"
+	ui-outer-click="Ui.turnOff('myDropdown')"
+	ui-outer-click-if="Ui.active('myDropdown')"
+	ui-show="myDropdown"
+	ui-state="myDropdown"
+	ui-turn-off="myDropdown">
+		<li><a class="btn" ng-disabled="efc.estateForm.$error.required" ng-click="efc.submitAction(false)" href=""><i class="fa fa-save fa-lg btngold"></i></a></li>
+		<li><a class="btn" ui-turn-on="info" href=""><i class="fa fa-info-circle fa-lg btngold"></i></a></li>
+		<!--		<li class="divider"></li>-->
+		<li ng-if="efc.isEditMode"><a class="btn" href="#/estate/{{efc.estate.id}}/delete"><i class="fa fa-trash-o fa-lg btngold"></i></a></li>
+	</ul>
+	
+</div>
+
+
+<div ui-content-for="modals">
+	<div ng-include="'info.html'"></div>
+	<div ng-include="'map.html'"></div>
+	<div ng-include="'www.html'"></div>
+</div> 
+

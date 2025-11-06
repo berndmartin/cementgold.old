@@ -1,0 +1,18 @@
+<div class="modal" ui-if='map' ui-state='map'>
+	<div class="modal-backdrop in"></div>
+	<div class="modal-dialog" >
+	    <div class="modal-content">
+
+			<h3 class="modal-title text-gold" style="font-weight: 100;"> {{config.appName}} <a class="close btn push-right"
+	              ui-turn-off="map"><i class="fa fa-close fa-lg"></i></a>
+	        </h3>
+	        
+	        
+	        <h4 class="modal-body text-center" style="margin-top: 50px; margin-bottom: 50px;"><a ng-click="goToMap(estate.plz,estate.address);"><i class="fa fa-map-marker text-gold"></i> {{estate.plz}} {{estate.address}}</a>
+	        </h4>
+	        <div estate-map=""></div>
+        
+	    </div>
+	</div>
+</div>
+

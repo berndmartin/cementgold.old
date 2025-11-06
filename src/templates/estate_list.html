@@ -1,0 +1,129 @@
+<div class="scrollable">
+	<div class="scrollable-content">
+		<div class="section">
+			<div class="input-group" id="top">
+				<div class="input-group-addon">
+					<i class="fa fa-search"></i>
+				</div>
+
+				<input class="form-control input-sm" type="text" placeholder="Suchen ..." ng-model="elc.searchText"/>
+				{{elc.searchText}}
+			</div>
+			<div class="small"  ng-repeat="estate in elc.estates | orderBy:['title'] " >
+				<hr class="divider">
+				<a class="btn pull-right" style="margin-top: -12px;margin-right: -10px;" ng-href="#/estates/{{ estate.id }}"><i class="fa fa-chevron-right fa-lg text-gold"></i> </a>
+				<h5 class="text-center">{{estate.title}}&nbsp;{{ estate.qm }}&nbsp;{{  elc.setup.qm }}</h5>
+				
+
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-6 col-md-4">
+							<div class="row">
+								<div class="col-xs-6 text-right">
+									{{ 'kaufpreis' | transSrv }}/{{ elc.setup.qm}}
+								</div>
+								<div class="col-xs-6 text-left">
+									{{  elc.setup.currency }}&nbsp;{{ estate.kaufpreis / estate.qm | number : 0 }}
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<div class="row">
+								<div class="col-xs-6 text-right">
+									{{ 'investitionskosten' | transSrv }}
+								</div>
+								<div class="col-xs-6 text-left">
+									{{  elc.setup.currency }}&nbsp;{{ estate.totalprice | number : 0 }}
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<div class="row">
+								<div class="col-xs-6 text-right">
+									{{ 'finanzierung' | transSrv }}
+								</div>
+								<div class="col-xs-6 text-left">
+									{{  elc.setup.currency }}&nbsp;{{ estate.fremdkap | number : 0 }}
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<div class="row">
+								<div class="col-xs-6 text-right">
+									{{'jahre' | transSrv }}
+								</div>
+								<div class="col-xs-6 text-left">
+									{{ estate.years | number : 0 }}
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<div class="row">
+								<div class="col-xs-6 text-right">
+									{{ 'restschuld' | transSrv }}
+								</div>
+								<div class="col-xs-6 text-left">
+									{{  elc.setup.currency }}&nbsp;{{ estate.restschuld | number : 0 }}
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<div class="row">
+								<div class="col-xs-6 text-right">
+									{{ 'miete' | transSrv }}&nbsp;{{ 'hhperannum' | transSrv }}
+								</div>
+								<div class="col-xs-6 text-left">
+									{{  elc.setup.currency }}&nbsp;{{ estate.grundmietesum | number : 0 }}
+								</div>
+							</div>
+						</div>
+						<div class="col-xs-6 col-md-4">
+							<div class="row">
+								<div class="col-xs-6 text-right">
+									{{ 'cashflow' | transSrv }}
+								</div>
+								<div class="col-xs-6 text-left">
+									{{  elc.setup.currency }}&nbsp;{{ estate.sumueber | number : 0 }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="text-center">
+					{{estate.remark}}
+				</div>
+			</div>	
+			<hr class="divider">
+			
+			<!-- sum   ############################################################################### -->
+
+			<div class="row small">
+				<div class="col-xs-9 col-md-10 text-right">
+					{{ 'investitionskosten' | transSrv }}&nbsp;&sum;
+				</div>
+				<div class="col-xs-3 col-md-2 text-left">
+					{{  elc.setup.currency }}&nbsp;{{elc.estates | sumByKey :'totalprice' | number : 0}} 
+				</div>
+			</div>
+			<div class="row small">
+				<div class="col-xs-9 col-md-10 text-right">
+					{{ 'cashflow' | transSrv }}&nbsp;&sum;
+				</div>
+				<div class="col-xs-3 col-md-2 text-left">
+					{{  elc.setup.currency }}&nbsp;{{elc.estates | sumByKey:'sumueber'| number : 0}} 
+				</div>
+			</div>
+			<a class="btn" ng-click="elc.scrollToPos('top')" href=""><i class="fa fa-chevron-up fa-lg btngold"></i></a>
+		</div>
+	</div>
+</div>		
+
+
+<div ui-content-for="navbarAction">
+	<a class="btn" ui-turn-on="info" href=""><i class="fa fa-info-circle fa-lg btngold"></i></a>
+</div>
+
+
+<div ui-content-for="modals">
+	<div ng-include="'info.html'"></div>
+</div> 

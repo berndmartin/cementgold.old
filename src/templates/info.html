@@ -1,0 +1,133 @@
+<div class="modal modal-overlay" ui-if='info' ui-state='info'>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="row">
+            <div class="col-xs-10">
+              <typeahead items="items" prompt="{{ 'hhsearch' | transSrv }}" title="name" 
+                             model="name" subtitle="transid" smodel="transid" 
+                             on-select="appHelp.onItemSelected(transid)" />
+            </div>
+          <div class="col-xs-2">
+            <a class="close btn push-right"
+                      ui-turn-off="info"><i class="fa fa-close fa-lg"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <h4 class="modal-title">{{ masterh | transSrv }}</h4>
+        {{ ("help"+masterh) | transSrv  : ( masterh | transSrv ) }} <br />
+        <!-- formeln --> 
+        <span ng-show="masterformel">
+          <p>{{ 'hhformel' | transSrv }}</p>
+          <span ng-show="masterh == 'kaufnebenkosten'">
+            {{ 'kaufnebenkosten' | transSrv }} = 
+            <var><a ng-click="appHelp.onItemSelected('makler')">{{ 'makler' | transSrv }}</a></var> + <var><a ng-click="appHelp.onItemSelected('grerwst')">{{ 'grerwst' | transSrv }}</a></var> + <var><a ng-click="appHelp.onItemSelected('notar')">{{ 'notar' | transSrv }}</a></var> + <var><a ng-click="appHelp.onItemSelected('grundbuch')">{{ 'grundbuch' | transSrv }}</a></var> + <var><a ng-click="appHelp.onItemSelected('sonstigekosten')">{{ 'sonstigekosten' | transSrv }}</a></var> 
+          </span> 
+
+          <span ng-show="masterh == 'investitionskosten'">
+            {{ 'investitionskosten' | transSrv }} = 
+             <var><a ng-click="appHelp.onItemSelected('kaufpreis')">{{ 'kaufpreis' | transSrv }}</a></var> + <var><a ng-click="appHelp.onItemSelected('kaufnebenkosten')">{{ 'kaufnebenkosten' | transSrv }}</a></var> 
+          </span> 
+
+          <span ng-show="masterh == 'makler'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('kaufpreis')">{{ 'kaufpreis' | transSrv }}</a></var> * {{ 'makler' | transSrv }} / 100 
+          </span> 
+
+          <span ng-show="masterh == 'grerwst'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('kaufpreis')">{{ 'kaufpreis' | transSrv }}</a></var> * {{ 'grerwst' | transSrv }} / 100 
+          </span> 
+
+          <span ng-show="masterh == 'notar'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('kaufpreis')">{{ 'kaufpreis' | transSrv }}</a></var> * {{ 'notar' | transSrv }} / 100 
+          </span> 
+
+          <span ng-show="masterh == 'zins'">
+            {{ 'hhbetrag' | transSrv }}({{ 'hhperannum' | transSrv }}) = 
+              <var><a ng-click="appHelp.onItemSelected('fremdkap')">{{ 'fremdkapital' | transSrv }}</a></var> * {{ 'zins' | transSrv }} / 100 
+          </span> 
+
+          <span ng-show="masterh == 'tilgung'">
+            {{ 'hhbetrag' | transSrv }}({{ 'hhperannum' | transSrv }}) = 
+              <var><a ng-click="appHelp.onItemSelected('fremdkap')">{{ 'fremdkapital' | transSrv }}</a></var> * {{ 'tilgung' | transSrv }} / 100 
+          </span> 
+          
+          <span ng-show="masterh == 'annuitaet'">
+            {{ 'annuitaet' | transSrv }}({{ 'hhperannum' | transSrv }}) = 
+              <var><a ng-click="appHelp.onItemSelected('zins')">{{ 'zins' | transSrv }}</a></var> + 
+              <var><a ng-click="appHelp.onItemSelected('tilgung')">{{ 'tilgung' | transSrv }}</a></var> 
+          </span> 
+
+          <span ng-show="masterh == 'nonumlagefaehignebenkosten'">
+            {{ 'nonumlagefaehignebenkosten' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('hausverwaltung')">{{ 'hausverwaltung' | transSrv }}</a></var> +
+              <var><a ng-click="appHelp.onItemSelected('ruecklagen')">{{ 'ruecklagen' | transSrv }}</a></var> 
+          </span> 
+
+          <span ng-show="masterh == 'nettomiete'">
+            {{ 'nettomiete' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('miete')">{{ 'miete' | transSrv }}</a></var> - 
+              <var><a ng-click="appHelp.onItemSelected('nonumlagefaehignebenkosten')">{{ 'nonumlagefaehignebenkosten' | transSrv }}</a></var> 
+          </span> 
+
+          <span ng-show="masterh == 'ausfallrisiko'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('nettomiete')">{{ 'nettomiete' | transSrv }}</a></var> * 
+              {{ 'ausfallrisiko' | transSrv }} / 100 
+          </span> 
+
+          <span ng-show="masterh == 'einnahmedynamic'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('nettomiete')">{{ 'nettomiete' | transSrv }}</a></var> * 
+              {{ 'einnahmedynamic' | transSrv }} / 100 
+          </span> 
+
+          <span ng-show="masterh == 'kostendynamic'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('nettomiete')">{{ 'nettomiete' | transSrv }}</a></var> *
+              {{ 'kostendynamic' | transSrv }} / 100 
+          </span> 
+
+         <span ng-show="masterh == 'wohnungsanteil'">
+            {{ 'wohnungsanteil' | transSrv }} = 100 % -  
+              <var><a ng-click="appHelp.onItemSelected('grundstuecksanteil')">{{ 'grundstuecksanteil' | transSrv }}</a></var>  
+          </span> 
+
+          <span ng-show="masterh == 'abschreibung'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('wohnungsanteil')">{{ 'wohnungsanteil' | transSrv }}</a></var> *
+              <var><a ng-click="appHelp.onItemSelected('kaufpreis')">{{ 'kaufpreis' | transSrv }}</a></var> / 100 * {{ 'abschreibung' | transSrv }} / 100 
+          </span> 
+
+          <span ng-show="masterh == 'zubesteuern'">
+            {{ 'hhbetrag' | transSrv }} = 
+              <var><a ng-click="appHelp.onItemSelected('miete')">{{ 'miete' | transSrv }}</a></var> - (
+              <var><a ng-click="appHelp.onItemSelected('hausverwaltung')">{{ 'hausverwaltung' | transSrv }}</a></var> +
+              <var><a ng-click="appHelp.onItemSelected('zins')">{{ 'zins' | transSrv }}</a></var> +
+              <var><a ng-click="appHelp.onItemSelected('abschreibung')">{{ 'abschreibung' | transSrv }}</a></var> )
+
+          </span> 
+
+          <span ng-show="masterh == 'steuersatz'">
+            {{ 'hhbetrag' | transSrv }} = 
+            <var><a ng-click="appHelp.onItemSelected('zubesteuern')">{{ 'zubesteuern' | transSrv }}</a></var> *
+              {{ 'steuersatz' | transSrv }} / 100 
+          </span> 
+
+
+        </span>
+
+      </div>
+
+      <div class="modal-footer">
+         <a class="btn" ng-show="masterbackward" ng-click="appHelp.onItemSelected('<')"><i class="fa fa-chevron-left fa-lg"></i></a>
+         <a class="btn" ng-show="masterforward" ng-click="appHelp.onItemSelected('>')"><i class="fa fa-chevron-right fa-lg"></i></a>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,16 @@
+<div class="scrollable">
+	<div class="scrollable-content"> 
+		<div class="full-height section section-center text-center center-block" style="padding-top: 25%; padding-bottom: 50%">
+			<h4>{{ 'hhdeletemsg' | transSrv : edc.estate.title }}</h4>
+			<a class="btn btn-danger" ng-click="edc.deleteEstate(edc.estate.id)">
+				<i class="fa fa-trash-o fa-2x" aria-hidden="true"></i>
+			</a>
+		</div>
+	</div>	
+</div>
+
+<div ui-content-for="navbarAction">
+	<a class='btn' ng-click="edc.cancel()" href=""><i class="fa fa-chevron-left fa-lg btngold"></i></a>
+</div>
+
+

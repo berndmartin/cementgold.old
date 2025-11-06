@@ -1,0 +1,46 @@
+<table class="table table-striped table-condensed small" data-halign="right" data-align="center">
+    <thead>
+        <tr>
+            <th><sub>{{ 'hhjahr' | transSrv }}</sub></th>
+            <th><sub>{{ 'zinsen' | transSrv }}</sub></th>
+            <th><sub>{{ 'tilgung' | transSrv }}</sub></th> 
+            <th><sub>{{ 'restschuld' | transSrv }}</sub></th> 
+            <th><sub>{{ 'ueberschuss' | transSrv }}</sub></th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <td><sub>&sum;&nbsp;{{ 'hhjahr' | transSrv }}</sub></sub></td>
+            <td><sub>&sum;&nbsp;{{ 'zinsen' | transSrv }}</sub></td>
+            <td><sub>&sum;&nbsp;{{ 'tilgung' | transSrv }}</sub></td>
+            <td><sub>{{ 'restschuld' | transSrv }}</sub></td>
+            <td><sub>&sum;&nbsp;{{ 'ueberschuss' | transSrv }}</sub></td>
+        </tr>
+        <tr>
+            <td>{{ estate.years | number : 0 }}</td>
+            <td>{{ setup.currency }}&nbsp;{{ estate.sumzins    | number : 0 }}</td>
+            <td>{{ setup.currency }}&nbsp;{{ estate.sumtilgung | number : 0 }}</td>
+            <td>{{ setup.currency }}&nbsp;{{ estate.restschuld | number : 0 }}</td>
+            <td ng-class="{red: estate.sumueber < 0, black: estate.sumueber >= 0 }">{{ setup.currency }}&nbsp;{{ estate.sumueber   | number : 0 }}</td>
+        </tr>
+    </tfoot>
+    <tbody>
+        <tr ng-repeat="unit in units">
+            <td><sub>{{ unit.id | number : 0 }}&nbsp;({{unit.date}})</sub></td>
+            <td>{{ setup.currency }}&nbsp;{{ unit.zins    | number : 0 }}</td>
+            <td>{{ setup.currency }}&nbsp;{{ unit.tilgung | number : 0 }}</td>
+            <td>{{ setup.currency }}&nbsp;{{ unit.rest    | number : 0 }}</td>
+            <td ng-class="{red: unit.ueber < 0, black: unit.ueber >= 0 }">{{ setup.currency }}&nbsp;{{ unit.ueber   | number : 0 }}</td>
+            <!--   
+            <td>{{ setup.currency }}&nbsp;{{ unit.ein     | number : 0 }}</td>
+            <td>{{ setup.currency }}&nbsp;{{ unit.aus     | number : 0 }}</td>
+            -->
+        </tr>
+    </tbody>
+</table>
+
+<div class="row small">
+    <div class="col-xs-offset-1 col-xs-10" >
+        {{ 'zahlungen' | transSrv }}  &sum;&nbsp;{{ setup.currency }}&nbsp;{{ estate.sumzins + estate.sumtilgung | number : 0 }}
+    </div>
+</div>

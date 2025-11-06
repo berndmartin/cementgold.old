@@ -1,0 +1,591 @@
+<div class="navbar-brand navbar-brand-center"  ui-content-for="title">
+	<div>{{ 'setup' | transSrv }}</div>
+</div>
+
+<div class="scrollable">
+	<div class="scrollable-content">
+		<div class="section">
+			<div class="list-group-item list-group-item-home" id="top">
+        		<div class="text-left">
+          			{{ 'helpsetup' | transSrv : ('setup' | transSrv) : config.appName }}
+        		</div>
+      		</div>
+			<form name="esc.setupForm" novalidate>
+				<div class="inputs">
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="language">{{ 'language' | transSrv }}</label>
+							</div>
+							<div class="col-xs-4">
+
+								<select class="form-control"
+									ng-model="esc.setup.language" 
+									required
+									name="language"
+									ng-init="language = esc.curlang"
+									id="language"
+									ng-options="language.id as language.id for language in esc.languages"
+									>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="currency">{{ 'hhcurrency' | transSrv }}</label>
+							</div>
+							<div class="col-xs-4">
+
+								<select class="form-control"
+									ng-model="esc.setup.currency" 
+									required
+									name="currency"
+									id="currency"
+									>
+									<option>€</option>
+								<!--	<option>&#164;</option>-->
+									<option>&#36;</option>
+									<option>&#162;</option>
+									<option>&#163;</option>
+									
+									<option>&#165;</option>
+									<option>&#8355;</option>
+									<option>&#8356;</option>
+									<option>&#8359;</option>
+									<option>&#x20B9;</option>
+									<option>&#8366;</option>
+									<option>&#8372;</option>
+									<option>&#8370;</option>
+									<option>&#8369;</option>
+									<option>&#8371;</option>
+									<option>&#8373;</option>
+									<option>&#8365;</option>
+									<option>&#8362;</option>
+									<option>&#8363;</option>
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="qm">{{ 'flaeche' | transSrv }}</label>
+							</div>
+							<div class="col-xs-4">
+
+								<select class="form-control"
+									ng-model="esc.setup.qm" 
+									required
+									name="qm"
+									id="qm"
+									>
+									<option>m²</option>
+									<option><sup>sqft</sup></option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<hr class="divider" />
+
+					<!-- *** default setting bei neuanlage ******************** -->
+					<div class="list-group-item list-group-item-home">
+        				<div class="text-left">
+          				{{ 'helpdefault' | transSrv : ('setup' | transSrv) : config.appName }}
+        				</div>
+      				</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="title">{{ 'title' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<input 	type="text" 
+										placeholder="{{ 'title' | transSrv }}..." 
+										ng-model="esc.defestate.title" 
+										ng-click="esc.updateHelp('title')"
+										name="title" 
+										id="title" 
+										class="form-control" 
+										required	
+										/>
+								<span ng-show="esc.setupForm.title.$dirty && esc.setupForm.title.$invalid">
+									{{ 'input' | transSrv : ( 'title' | transSrv ) }}
+								</span>
+								<span class="error" ng-show="esc.setupForm.title.$error.required">{{'required' | transSrv }}</span>
+								<hr class="divider" />
+
+							</div>
+						</div>
+					</div>
+					
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="makler">{{'makler' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'makler' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="makler"
+									       ng-click="esc.updateHelp('makler')" 
+									       ng-model="esc.defestate.makler" 
+									       name="makler" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.makler.$dirty && esc.setupForm.makler.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'makler' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.makler.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="grerwst">{{'grerwst' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'grerwst' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="grerwst"
+									       ng-click="esc.updateHelp('grerwst')" 
+									       ng-model="esc.defestate.grerwst" 
+									       name="grerwst" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.grerwst.$dirty && esc.setupForm.grerwst.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'grerwst' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.grerwst.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="notar">{{'notar' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'notar' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="notar"
+									       ng-click="esc.updateHelp('notar')" 
+									       ng-model="esc.defestate.notar" 
+									       name="notar" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.notar.$dirty && esc.setupForm.notar.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'notar' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.notar.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="grundbuch">{{ 'grundbuch' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+										<div class="input-group-addon small">{{ esc.setup.currency }}</div>
+										<input 	type="number" 
+												placeholder="{{ 'grundbuch' | transSrv }}..." 
+												ng-model="esc.defestate.grundbuch" 
+											name="grundbuch" 
+											ng-click="esc.updateHelp('grundbuch')" 
+											id="grundbuch" 
+											class="form-control" 	
+											ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+											value="0"
+											min="0" 
+											required />
+								</div>
+								<span ng-show="esc.setupForm.grundbuch.$dirty && esc.setupForm.grundbuch.$invalid">
+									{{ 'inputprice' | transSrv : ( 'grundbuch' | transSrv ) }}
+								</span>
+								<span class="error" ng-show="esc.setupForm.grundbuch.$error.required">{{'required' | transSrv }}</span>
+								<hr class="divider" />
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="eigenkap">{{ 'eigenkapital' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+										<div class="input-group-addon small">{{ esc.setup.currency }}</div>
+										<input 	type="number" 
+												placeholder="{{ 'eigenkapital' | transSrv }}..." 
+												ng-model="esc.defestate.eigenkap" 
+											name="eigenkap" 
+											ng-click="esc.updateHelp('eigenkap')" 
+											id="eigenkap" 
+											class="form-control" 	
+											ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+											value="0"
+											min="0" 
+											required />
+								</div>
+								<span ng-show="esc.setupForm.eigenkap.$dirty && esc.setupForm.eigenkap.$invalid">
+									{{ 'inputprice' | transSrv : ( 'eigenkap' | transSrv ) }}
+								</span>
+								<span class="error" ng-show="esc.setupForm.eigenkap.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="zins">{{'zins' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'zins' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="zins"
+									       ng-click="esc.updateHelp('zins')" 
+									       ng-model="esc.defestate.zins" 
+									       name="zins" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.zins.$dirty && esc.setupForm.zins.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'zins' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.zins.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="tilgung">{{'tilgung' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'tilgung' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="tilgung"
+									       ng-click="esc.updateHelp('tilgung')" 
+									       ng-model="esc.defestate.tilgung" 
+									       name="tilgung" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.tilgung.$dirty && esc.setupForm.tilgung.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'tilgung' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.tilgung.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="laufzeit">{{ 'laufzeit' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+										<div class="input-group-addon small">{{'jahre' | transSrv }}</div>
+										<input 	type="number" 
+												placeholder="{{ 'laufzeit' | transSrv }}..." 
+												ng-model="esc.defestate.laufzeit" 
+											name="laufzeit" 
+											ng-click="esc.updateHelp('laufzeit')" 
+											id="laufzeit" 
+											class="form-control" 	
+											ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+											value="0"
+											min="0"
+											max="999" 
+											required />
+								</div>
+								<span ng-show="esc.setupForm.laufzeit.$dirty && esc.setupForm.laufzeit.$invalid">
+									{{ 'inputprice' | transSrv : ( 'laufzeit' | transSrv ) }}
+								</span>
+								<span class="error" ng-show="esc.setupForm.laufzeit.$error.required">{{'required' | transSrv }}</span>
+								<hr class="divider" />
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="abschreibung">{{'abschreibung' | transSrv }}&nbsp;{{ 'hhperannum' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'abschreibung' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="abschreibung"
+									       ng-click="esc.updateHelp('abschreibung')" 
+									       ng-model="esc.defestate.abschreibung" 
+									       name="abschreibung" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.abschreibung.$dirty && esc.setupForm.abschreibung.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'abschreibung' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.abschreibung.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="steuer">{{'steuer' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'steuer' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="steuer"
+									       ng-click="esc.updateHelp('steuer')" 
+									       ng-model="esc.defestate.steuer" 
+									       name="steuer" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.steuer.$dirty && esc.setupForm.steuer.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'steuer' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.steuer.$error.required">{{'required' | transSrv }}</span>
+								<hr class="divider" />
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="hausverwaltung">{{ 'hausverwaltung' | transSrv }}&nbsp;{{ 'hhmonatlich' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+										<div class="input-group-addon small">{{ esc.setup.currency }}</div>
+										<input 	type="number" 
+												placeholder="{{ 'hausverwaltung' | transSrv }}..." 
+												ng-model="esc.defestate.hausverwaltung" 
+											name="hausverwaltung" 
+											ng-click="esc.updateHelp('hausverwaltung')" 
+											id="hausverwaltung" 
+											class="form-control" 	
+											ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+											value="0"
+											min="0" 
+											required />
+								</div>
+								<span ng-show="esc.setupForm.hausverwaltung.$dirty && esc.setupForm.hausverwaltung.$invalid">
+									{{ 'inputprice' | transSrv : ( 'hausverwaltung' | transSrv ) }}
+								</span>
+								<span class="error" ng-show="esc.setupForm.hausverwaltung.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="instandhaltungsruecklagen">{{ 'ruecklagen' | transSrv }}&nbsp;{{ 'hhmonatlich' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+										<div class="input-group-addon small">{{ esc.setup.currency }}</div>
+										<input 	type="number" 
+												placeholder="{{ 'ruecklagen' | transSrv }}..." 
+												ng-model="esc.defestate.instandhaltungsruecklagen" 
+											name="instandhaltungsruecklagen" 
+											ng-click="esc.updateHelp('instandhaltungsruecklagen')" 
+											id="instandhaltungsruecklagen" 
+											class="form-control" 	
+											ng-pattern="/^\d{0,9}(\.\d{1,2})?$/"
+											value="0"
+											min="0" 
+											required />
+								</div>
+								<span ng-show="esc.setupForm.instandhaltungsruecklagen.$dirty && esc.setupForm.instandhaltungsruecklagen.$invalid">
+									{{ 'inputprice' | transSrv : ( 'instandhaltungsruecklagen' | transSrv ) }}
+								</span>
+								<span class="error" ng-show="esc.setupForm.instandhaltungsruecklagen.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="ausfallrisiko">{{'ausfallrisiko' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'ausfallrisiko' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="ausfallrisiko"
+									       ng-click="esc.updateHelp('ausfallrisiko')" 
+									       ng-model="esc.defestate.ausfallrisiko" 
+									       name="ausfallrisiko" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.ausfallrisiko.$dirty && esc.setupForm.ausfallrisiko.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'ausfallrisiko' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.ausfallrisiko.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="einnahmedynamic">{{'einnahmedynamic' | transSrv }}&nbsp;{{ 'hhperannum' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'einnahmedynamic' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="einnahmedynamic"
+									       ng-click="esc.updateHelp('einnahmedynamic')" 
+									       ng-model="esc.defestate.einnahmedynamic" 
+									       name="einnahmedynamic" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.einnahmedynamic.$dirty && esc.setupForm.einnahmedynamic.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'einnahmedynamic' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.einnahmedynamic.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+
+
+					<div class="row">
+						<div class="form-group">
+							<div class="col-xs-4">
+								<label class="small control-label pull-right" for="kostendynamic">{{'kostendynamic' | transSrv }}&nbsp;{{ 'hhperannum' | transSrv }}</label>
+							</div>
+							<div class="col-xs-8">
+								<div class="input-group">
+									<div class="input-group-addon small"><small>&#037;</small></div>
+									<input type="number" 
+									       placeholder="{{ 'kostendynamic' | transSrv }}..." 
+									       value="0" 
+									       min="0" 
+									       max="100" 
+									       aria-describedby="kostendynamic"
+									       ng-click="esc.updateHelp('kostendynamic')" 
+									       ng-model="esc.defestate.kostendynamic" 
+									       name="kostendynamic" 
+									       ng-pattern="/^\d{0,2}(\.\d{1,2})?$/" 
+									       class="form-control"
+									       required />
+								</div>
+								<span ng-show="esc.setupForm.kostendynamic.$dirty && esc.setupForm.kostendynamic.$invalid">
+									{{ 'inputpercent' | transSrv : ( 'kostendynamic' | transSrv ) }} 
+								</span>		
+								<span class="error" ng-show="esc.setupForm.kostendynamic.$error.required">{{'required' | transSrv }}</span>
+							</div>
+						</div>
+					</div>
+					<hr class="divider" />
+				</div>
+			</form>
+			<a ng-click="esc.scrollToPos('top')" href=""><i class="fa fa-chevron-up fa-lg"></i></a>
+		</div>
+	</div>
+</div>
+
+
+<div ui-content-for="navbarAction">
+	<a ui-turn-on='myDropdown' class='btn'><i class="fa fa-th-large fa-lg btngold"></i></a>
+  	<ul class="dropdown-menu btngold"
+		ui-outer-click="Ui.turnOff('myDropdown')"
+		ui-outer-click-if="Ui.active('myDropdown')"
+		ui-show="myDropdown"
+		role="btn" 
+		style="min-width: 0px !important"
+		ui-state="myDropdown"
+		ui-turn-off="myDropdown">
+		<li>
+			<a class="btn" ng-disabled="esc.setupForm.$error.required" ng-click="esc.submitAction()" href=""><i class="fa fa-save fa-lg btngold"></i></a>
+		</li>
+		<li><a class="btn" ui-turn-on="info" href=""><i class="fa fa-info-circle fa-lg btngold"></i></a></li>
+	</ul>
+</div>
+
+
+
+<div ui-content-for="modals">
+  <div ng-include="'info.html'"></div>
+</div> 
